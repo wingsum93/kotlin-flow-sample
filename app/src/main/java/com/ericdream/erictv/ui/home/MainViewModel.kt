@@ -21,7 +21,7 @@ class MainViewModel() : ViewModel() {
 
     @SuppressWarnings("unused")
     fun processClick(view: View) {
-        val uri = C.SAMPLE_HLS_LINK.toUri()
+        val uri = C.RTHK_31_LINK.toUri()
 
         //
         val bundle = Bundle()
@@ -29,4 +29,16 @@ class MainViewModel() : ViewModel() {
         targetClass.postValue(PlayVideoAct::class to bundle)
     }
 
+    fun processV2(int: Int) {
+        val uri = when (int) {
+            0 -> C.RTHK_31_LINK.toUri()
+            1 -> C.RTHK_32_LINK.toUri()
+            2 -> C.OPENTV_LINK.toUri()
+            else -> throw IllegalArgumentException()
+        }
+        //
+        val bundle = Bundle()
+        bundle.putParcelable(C.Key.URI, uri)
+        targetClass.postValue(PlayVideoAct::class to bundle)
+    }
 }
