@@ -11,7 +11,7 @@ import com.ericdream.erictv.data.repo.LiveChannelRepo
 import com.ericdream.erictv.ui.PlayVideoAct
 import kotlin.reflect.KClass
 
-class MainViewModel() : ViewModel() {
+class MainViewModel() : ViewModel(), OnChannelSelectListener {
 
     val text: MutableLiveData<String> = MutableLiveData<String>()
 
@@ -48,5 +48,14 @@ class MainViewModel() : ViewModel() {
         val bundle = Bundle()
         bundle.putParcelable(C.Key.URI, uri)
         targetClass.postValue(PlayVideoAct::class to bundle)
+    }
+
+    override fun onChannelSelect(liveChannel: LiveChannel) {
+        if (liveChannel.link != null) {
+            val uri = liveChannel.link!!.toUri()
+            val bundle = Bundle()
+            bundle.putParcelable(C.Key.URI, uri)
+            targetClass.postValue(PlayVideoAct::class to bundle)
+        }
     }
 }

@@ -11,6 +11,7 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -19,7 +20,7 @@
             android:id="@+id/image"
             android:layout_width="80dp"
             android:layout_height="50dp"
-            app:imageUrl="@{item.link}"
+            app:imageUrl="@{item.iconLink}"
             tools:src="@drawable/viutv" />
 
         <TextView

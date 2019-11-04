@@ -9,7 +9,10 @@ import com.ericdream.erictv.R
 import com.ericdream.erictv.data.model.LiveChannel
 import com.ericdream.erictv.databinding.RowChannelBinding
 
-class ChannelAdapter(private val context: Context) :
+class ChannelAdapter(
+    private val context: Context,
+    private val onChannelSelectListener: OnChannelSelectListener?
+) :
     RecyclerView.Adapter<ChannelAdapter.ViewHolder>() {
 
     private var items: MutableList<LiveChannel> = mutableListOf()
@@ -33,7 +36,9 @@ class ChannelAdapter(private val context: Context) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
 
-        holder.bind(item)
+        holder.bind(item) { liveChannel ->
+            onChannelSelectListener?.onChannelSelect(item)
+        }
 
     }
 
@@ -45,8 +50,12 @@ class ChannelAdapter(private val context: Context) :
     class ViewHolder(private val binding: RowChannelBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(liveChannel: LiveChannel) {
+
+        fun bind(liveChannel: LiveChannel, onClick: (liveChannel: LiveChannel) -> Unit) {
             binding.item = liveChannel
+            binding.linearLayout.setOnClickListener {
+                onClick.invoke(liveChannel)
+            }
         }
     }
 }

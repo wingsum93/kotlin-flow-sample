@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.vm = viewModel
 
-        adapter = ChannelAdapter(this)
+        adapter = ChannelAdapter(this, viewModel)
         viewDataBinding.recyclerView.adapter = adapter
         viewDataBinding.recyclerView.layoutManager = LinearLayoutManager(this)
         viewDataBinding.recyclerView.setHasFixedSize(true)
