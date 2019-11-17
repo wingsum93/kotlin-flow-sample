@@ -31,3 +31,7 @@
   **[] $VALUES;
   public *;
 }
+
+
+# Okhttp
+-dontwarn okhttp3.internal.platform.ConscryptPlatform

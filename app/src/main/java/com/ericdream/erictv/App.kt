@@ -1,6 +1,6 @@
 package com.ericdream.erictv
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.facebook.stetho.Stetho
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
@@ -8,7 +8,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
-class App() : Application() {
+class App() : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         // start Koin!
