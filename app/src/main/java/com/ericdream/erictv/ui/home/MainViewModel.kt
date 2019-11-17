@@ -8,12 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.ericdream.erictv.C
 import com.ericdream.erictv.data.model.LiveChannel
 import com.ericdream.erictv.data.repo.LiveChannelRepo
-import com.ericdream.erictv.data.repo.LiveLinkGenerater
 import com.ericdream.erictv.ui.PlayVideoAct
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
-import org.koin.core.inject
 import timber.log.Timber
 import kotlin.reflect.KClass
 
@@ -25,8 +23,7 @@ class MainViewModel() : ViewModel(), OnChannelSelectListener, KoinComponent {
 
     val channels: MutableLiveData<List<LiveChannel>> = MutableLiveData()
 
-    val generater: LiveLinkGenerater by inject()
-    private val repo = LiveChannelRepo()
+    private val repo: LiveChannelRepo = LiveChannelRepo()
 
     fun start() {
         text.postValue("Hellow X!")
@@ -34,7 +31,6 @@ class MainViewModel() : ViewModel(), OnChannelSelectListener, KoinComponent {
         channels.postValue(repo.getLiveChannels())
 
     }
-
 
 
     override fun onChannelSelect(liveChannel: LiveChannel) {
@@ -45,7 +41,7 @@ class MainViewModel() : ViewModel(), OnChannelSelectListener, KoinComponent {
             viewModelScope.launch(Dispatchers.IO) {
                 bundle.putParcelable(C.Key.URI, uri)
 
-                val result = generater.getLink("ABC")
+                val result = repo.getLink("viutv")
 
                 if (result.error) {
                     Timber.e(result.exception)

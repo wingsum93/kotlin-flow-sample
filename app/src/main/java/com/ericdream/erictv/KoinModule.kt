@@ -1,6 +1,5 @@
 package com.ericdream.erictv
 
-import com.ericdream.erictv.data.repo.LiveLinkGenerater
 import com.ericdream.erictv.ui.home.MainViewModel
 import com.ericdream.erictv.ui.playvideo.VideoViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -13,6 +12,7 @@ val appModule = module {
     viewModel { VideoViewModel(get()) }
 
 
-    factory { LiveLinkGenerater() }
+//    single { LiveLinkGenerater() }
+//    single { LiveChannelRepo() }
 
 }
