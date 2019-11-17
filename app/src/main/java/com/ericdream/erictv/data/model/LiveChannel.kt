@@ -4,6 +4,8 @@ class LiveChannel {
     var name: String = ""
     var iconLink: String = ""
     var link: String? = null
+    // key for identify channel
+    var key: String = ""
 
 
     companion object {
@@ -14,6 +16,13 @@ class LiveChannel {
                 this.link = link
                 this.iconLink = iconLink
             }
+
+        }
+
+        fun liveChannel(block: LiveChannel.() -> Unit): LiveChannel {
+            val o = LiveChannel()
+            block.invoke(o)
+            return o
         }
     }
 }

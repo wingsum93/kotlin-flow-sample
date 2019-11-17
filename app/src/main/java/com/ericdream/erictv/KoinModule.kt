@@ -1,5 +1,6 @@
 package com.ericdream.erictv
 
+import com.ericdream.erictv.data.repo.LiveChannelRepo
 import com.ericdream.erictv.data.repo.LiveLinkGenerater
 import com.ericdream.erictv.ui.home.MainViewModel
 import com.ericdream.erictv.ui.playvideo.VideoViewModel
@@ -13,6 +14,7 @@ val appModule = module {
     viewModel { VideoViewModel(get()) }
 
 
-    factory { LiveLinkGenerater() }
+    single { LiveLinkGenerater() }
+    single { LiveChannelRepo(get()) }
 
 }

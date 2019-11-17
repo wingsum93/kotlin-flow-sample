@@ -1,5 +1,6 @@
 package com.ericdream.erictv.ui.home
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.ericdream.erictv.C
 import com.ericdream.erictv.data.model.LiveChannel
 import com.ericdream.erictv.data.repo.LiveChannelRepo
-import com.ericdream.erictv.data.repo.LiveLinkGenerater
 import com.ericdream.erictv.ui.PlayVideoAct
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,8 +25,7 @@ class MainViewModel() : ViewModel(), OnChannelSelectListener, KoinComponent {
 
     val channels: MutableLiveData<List<LiveChannel>> = MutableLiveData()
 
-    val generater: LiveLinkGenerater by inject()
-    private val repo = LiveChannelRepo()
+    private val repo: LiveChannelRepo by inject()
 
     fun start() {
         text.postValue("Hellow X!")
@@ -36,28 +35,28 @@ class MainViewModel() : ViewModel(), OnChannelSelectListener, KoinComponent {
     }
 
 
-
     override fun onChannelSelect(liveChannel: LiveChannel) {
-        if (liveChannel.link != null) {
-            val uri = liveChannel.link!!.toUri()
 
-            val bundle = Bundle()
-            viewModelScope.launch(Dispatchers.IO) {
+
+        var uri: Uri
+        val bundle = Bundle()
+        viewModelScope.launch(Dispatchers.IO) {
+            if (liveChannel.link != null) {
+                uri = liveChannel.link!!.toUri()
                 bundle.putParcelable(C.Key.URI, uri)
-
-                val result = generater.getLink("ABC")
-
+            } else {
+                val result = repo.getLink(liveChannel.key)
                 if (result.error) {
                     Timber.e(result.exception)
                 } else {
                     val link = result.link!!
                     Timber.d(link)
-                    val uri = link.toUri()
-                    val bundle = Bundle()
+                    uri = link.toUri()
+
                     bundle.putParcelable(C.Key.URI, uri)
-                    targetClass.postValue(PlayVideoAct::class to bundle)
                 }
             }
+            targetClass.postValue(PlayVideoAct::class to bundle)
         }
     }
 
