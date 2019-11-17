@@ -1,5 +1,6 @@
 package com.ericdream.erictv.ui.home
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
@@ -34,26 +35,27 @@ class MainViewModel() : ViewModel(), OnChannelSelectListener, KoinComponent {
 
 
     override fun onChannelSelect(liveChannel: LiveChannel) {
-        if (liveChannel.link != null) {
-            val uri = liveChannel.link!!.toUri()
 
-            val bundle = Bundle()
-            viewModelScope.launch(Dispatchers.IO) {
+
+        var uri: Uri
+        val bundle = Bundle()
+        viewModelScope.launch(Dispatchers.IO) {
+            if (liveChannel.link != null) {
+                uri = liveChannel.link!!.toUri()
                 bundle.putParcelable(C.Key.URI, uri)
-
-                val result = repo.getLink("viutv")
-
+            } else {
+                val result = repo.getLink(liveChannel.key)
                 if (result.error) {
                     Timber.e(result.exception)
                 } else {
                     val link = result.link!!
                     Timber.d(link)
-                    val uri = link.toUri()
-                    val bundle = Bundle()
+                    uri = link.toUri()
+
                     bundle.putParcelable(C.Key.URI, uri)
-                    targetClass.postValue(PlayVideoAct::class to bundle)
                 }
             }
+            targetClass.postValue(PlayVideoAct::class to bundle)
         }
     }
 

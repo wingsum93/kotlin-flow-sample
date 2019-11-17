@@ -41,6 +41,7 @@ class LiveLinkGenerater() {
 
         val io = ViuTvIO()
         io.channelno = "099"
+        io.deviceId = "99999999"
         return try {
             val bo = nowApi.getViuTV(io)
             val link = bo.asset.hls.adaptive[0]
