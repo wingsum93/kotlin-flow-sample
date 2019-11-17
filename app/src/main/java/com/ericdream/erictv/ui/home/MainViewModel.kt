@@ -13,6 +13,7 @@ import com.ericdream.erictv.ui.PlayVideoAct
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
+import org.koin.core.inject
 import timber.log.Timber
 import kotlin.reflect.KClass
 
@@ -24,7 +25,7 @@ class MainViewModel() : ViewModel(), OnChannelSelectListener, KoinComponent {
 
     val channels: MutableLiveData<List<LiveChannel>> = MutableLiveData()
 
-    private val repo: LiveChannelRepo = LiveChannelRepo()
+    private val repo: LiveChannelRepo by inject()
 
     fun start() {
         text.postValue("Hellow X!")

@@ -4,10 +4,10 @@ import com.ericdream.erictv.C
 import com.ericdream.erictv.data.model.ChannelResult
 import com.ericdream.erictv.data.model.LiveChannel
 
-class LiveChannelRepo() {
+class LiveChannelRepo constructor(private val generater: LiveLinkGenerater) {
 
     private val livechannels = mutableListOf<LiveChannel>()
-    private val generater: LiveLinkGenerater = LiveLinkGenerater()
+
 
     init {
 
