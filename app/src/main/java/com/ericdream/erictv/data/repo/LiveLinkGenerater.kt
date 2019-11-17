@@ -4,7 +4,6 @@ import com.ericdream.erictv.data.api.NowApi
 import com.ericdream.erictv.data.model.ChannelResult
 import com.ericdream.erictv.data.model.NowIO
 import com.ericdream.erictv.http.RetrofitManager
-import retrofit2.HttpException
 
 class LiveLinkGenerater() {
 
@@ -15,13 +14,8 @@ class LiveLinkGenerater() {
 
         val io = NowIO()
         io.channelno = "331"
-        val call = nowApi.getNowTV(io)
         try {
-            val res = call.execute()
-            if (!res.isSuccessful) {
-                throw HttpException(res)
-            }
-            val bo = res.body()!!
+            val bo = nowApi.getNowTV(io)
             val link = bo.asset.hls.adaptive[0]
             return ChannelResult.create(link)
         } catch (e: Exception) {

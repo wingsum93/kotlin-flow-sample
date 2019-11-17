@@ -1,5 +1,6 @@
 package com.ericdream.erictv.http
 
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -10,7 +11,8 @@ class RetrofitManager() {
     private var retrofit: Retrofit
 
     init {
-        okHttpClient = OkHttpClient()
+        okHttpClient = OkHttpClient.Builder()
+            .addNetworkInterceptor(StethoInterceptor()).build()
         retrofit = Retrofit.Builder()
             .baseUrl("https://itunes.apple.com/")
             .addConverterFactory(GsonConverterFactory.create())
