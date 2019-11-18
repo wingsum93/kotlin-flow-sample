@@ -1,6 +1,8 @@
 package com.ericdream.erictv.data.model
 
-class LiveChannel {
+import java.io.Serializable
+
+class LiveChannel : Serializable {
     var name: String = ""
     var iconLink: String = ""
     var link: String? = null

@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import com.ericdream.erictv.App
 import com.ericdream.erictv.C
 import com.ericdream.erictv.R
+import com.ericdream.erictv.data.model.LiveChannel
 import com.ericdream.erictv.databinding.ActPlayVideoBinding
 import com.ericdream.erictv.ui.playvideo.VideoViewModel
 import com.google.android.exoplayer2.ExoPlayerFactory
@@ -43,6 +44,7 @@ class PlayVideoAct : AppCompatActivity() {
     private var startPosition: Long = 0
 
     private lateinit var uri: Uri
+    private lateinit var liveChannel: LiveChannel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +56,8 @@ class PlayVideoAct : AppCompatActivity() {
         //get data
 
         uri = intent.getParcelableExtra(C.Key.URI) as Uri
+        liveChannel = intent.getSerializableExtra(C.Key.LIVECHANNEL) as LiveChannel
+
         viewDataBinding.playerView
 
 
@@ -68,7 +72,7 @@ class PlayVideoAct : AppCompatActivity() {
 
         player?.prepare(mediaSource)
 
-
+        title = liveChannel.name
     }
 
     private fun buildMediaSource(uri: Uri, overrideExtension: String?): MediaSource {

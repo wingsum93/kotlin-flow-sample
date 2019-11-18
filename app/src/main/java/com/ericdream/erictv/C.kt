@@ -29,5 +29,6 @@ object C {
 
     object Key {
         const val URI = "URI"
+        const val LIVECHANNEL = "LIVECHANNEL"
     }
 }

@@ -41,6 +41,7 @@ class MainViewModel() : ViewModel(), OnChannelSelectListener, KoinComponent {
 
         var uri: Uri
         val bundle = Bundle()
+        bundle.putSerializable(C.Key.LIVECHANNEL, liveChannel)
         viewModelScope.launch(Dispatchers.IO) {
             if (liveChannel.link != null) {
                 uri = liveChannel.link!!.toUri()
@@ -55,6 +56,7 @@ class MainViewModel() : ViewModel(), OnChannelSelectListener, KoinComponent {
                     uri = link.toUri()
 
                     bundle.putParcelable(C.Key.URI, uri)
+
                 }
             }
             targetClass.postValue(PlayVideoAct::class to bundle)
