@@ -79,17 +79,17 @@ class PlayVideoAct : AppCompatActivity() {
 
         @com.google.android.exoplayer2.C.ContentType val type =
             Util.inferContentType(uri, overrideExtension)
-        when (type) {
-            com.google.android.exoplayer2.C.TYPE_DASH -> return DashMediaSource.Factory(
+        return when (type) {
+            com.google.android.exoplayer2.C.TYPE_DASH -> DashMediaSource.Factory(
                 dataSourceFactory
             ).createMediaSource(uri)
-            com.google.android.exoplayer2.C.TYPE_SS -> return SsMediaSource.Factory(
+            com.google.android.exoplayer2.C.TYPE_SS -> SsMediaSource.Factory(
                 dataSourceFactory
             ).createMediaSource(uri)
-            com.google.android.exoplayer2.C.TYPE_HLS -> return HlsMediaSource.Factory(
+            com.google.android.exoplayer2.C.TYPE_HLS -> HlsMediaSource.Factory(
                 dataSourceFactory
             ).createMediaSource(uri)
-            com.google.android.exoplayer2.C.TYPE_OTHER -> return ProgressiveMediaSource.Factory(
+            com.google.android.exoplayer2.C.TYPE_OTHER -> ProgressiveMediaSource.Factory(
                 dataSourceFactory
             ).createMediaSource(uri)
             else -> throw IllegalStateException("Unsupported type: $type")

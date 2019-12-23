@@ -25,6 +25,9 @@ android {
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
     dataBinding {
         enabled = true
     }
@@ -54,7 +57,7 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     def recyclerview_version = "1.1.0-rc01"
 
-    implementation "androidx.recyclerview:recyclerview:1.1.0-rc01"
+    implementation "androidx.recyclerview:recyclerview:1.2.0-alpha01"
     // For control over item selection of both touch and mouse driven selection
     implementation "androidx.recyclerview:recyclerview-selection:1.0.0"
 
