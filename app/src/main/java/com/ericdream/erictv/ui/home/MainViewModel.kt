@@ -11,6 +11,7 @@ import com.ericdream.erictv.data.model.LiveChannel
 import com.ericdream.erictv.data.repo.LiveChannelRepo
 import com.ericdream.erictv.ui.PlayVideoAct
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -27,7 +28,7 @@ class MainViewModel() : ViewModel(), OnChannelSelectListener, KoinComponent {
 
     private val repo: LiveChannelRepo by inject()
 
-    fun start() {
+    fun loadChannel() {
         text.postValue("Hellow X!")
 
         channels.postValue(repo.getLiveChannels())
@@ -62,6 +63,7 @@ class MainViewModel() : ViewModel(), OnChannelSelectListener, KoinComponent {
 
 
     override fun onCleared() {
+        viewModelScope.coroutineContext.cancel()
         super.onCleared()
     }
 }

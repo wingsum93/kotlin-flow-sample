@@ -36,25 +36,24 @@ class ChannelAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
 
-        holder.bind(item) { liveChannel ->
-            onChannelSelectListener?.onChannelSelect(item)
-        }
+        holder.bind(item, onChannelSelectListener)
 
     }
 
     fun update(update: List<LiveChannel>) {
         items.clear()
         items.addAll(update)
+        notifyDataSetChanged()
     }
 
     class ViewHolder(private val binding: RowChannelBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
 
-        fun bind(liveChannel: LiveChannel, onClick: (liveChannel: LiveChannel) -> Unit) {
+        fun bind(liveChannel: LiveChannel, listener: OnChannelSelectListener?) {
             binding.item = liveChannel
             binding.linearLayout.setOnClickListener {
-                onClick.invoke(liveChannel)
+                listener?.onChannelSelect(liveChannel)
             }
         }
     }

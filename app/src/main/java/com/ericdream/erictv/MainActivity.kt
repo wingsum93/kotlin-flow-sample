@@ -37,7 +37,8 @@ class MainActivity : AppCompatActivity() {
             goToNextClass(it)
         })
 
-        viewModel.start()
+        viewModel.loadChannel()
+
 
 
     }
