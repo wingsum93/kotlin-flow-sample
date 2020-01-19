@@ -10,6 +10,8 @@ object C {
     const val OPENTV_LINK = "http://media.fantv.hk/m3u8/archive/channel2_stream1.m3u8"
     const val VIUTV_ICON_LINK =
         "https://yt3.ggpht.com/a/AGF-l7_fMTospARmgQ60hAyJIYqKer7799fcfgDt=s288-c-k-c0xffffffff-no-rj-mo"
+    const val LOCAL_HLS_H_LINK =
+        "http://192.168.1.100:8080/hls/%e5%ae%b6%e6%9c%89%e5%96%9c%e4%ba%8b3/index.m3u8"
 
     object Icon {
         const val VIUTV =

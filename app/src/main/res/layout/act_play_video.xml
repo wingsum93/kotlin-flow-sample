@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -14,15 +15,48 @@
         android:layout_height="match_parent">
 
         <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/player_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="16:9"
-            android:id="@+id/player_view" />
+            app:use_controller="false"
+            tools:background="@color/black" />
 
+        <ImageView
+            android:id="@+id/playBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="@{vm::playIconClick}"
+            android:src="@{vm.videoPlay ? @drawable/ic_pause_circle_outline_white_24dp : @drawable/ic_play_circle_outline_white_24dp}"
+            app:layout_constraintBottom_toBottomOf="@id/player_view"
+            app:layout_constraintRight_toRightOf="@id/player_view"
+            tools:src="@drawable/ic_pause_circle_outline_white_24dp" />
+
+        <ImageView
+            android:id="@+id/volume"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="@{vm::volumeIconClick}"
+            android:src="@{@drawable/ic_volume_off_white_24dp}"
+
+            app:layout_constraintBottom_toBottomOf="@id/player_view"
+            app:layout_constraintLeft_toLeftOf="@id/player_view"
+            tools:src="@drawable/ic_volume_up_white_24dp" />
+
+        <ImageView
+            android:id="@+id/fullScreenBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="@{vm::fullscreenIconClick}"
+            android:src="@{@drawable/ic_fullscreen_white_24dp}"
+
+            app:layout_constraintBottom_toBottomOf="@id/playBtn"
+            app:layout_constraintRight_toLeftOf="@id/playBtn"
+            tools:src="@drawable/ic_volume_up_white_24dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
