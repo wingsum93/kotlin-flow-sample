@@ -2,6 +2,8 @@ package com.ericdream.erictv
 
 object C {
 
+    const val APP_NAME: String = "ERIC_TV"
+    const val KEY_USER_SETTING: String = "KEY_USER_SETTING"
     const val SAMPLE_HLS_LINK = "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8"
     const val RTHK_31_LINK =
         "https://rthklive1-lh.akamaihd.net/i/rthk31_1@167495/index_2052_av-b.m3u8"

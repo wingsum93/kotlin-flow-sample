@@ -3,10 +3,24 @@ package com.ericdream.erictv.ui.playvideo
 import android.app.Application
 import android.net.Uri
 import android.view.View
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ProcessLifecycleOwner
+import androidx.lifecycle.Transformations
 import com.ericdream.erictv.App
+import com.ericdream.erictv.R
 import com.ericdream.erictv.data.model.LiveChannel
-import com.google.android.exoplayer2.*
+import com.ericdream.erictv.data.repo.UserRepository
+import com.ericdream.erictv.util.PlaybackStateDecoder
+import com.google.android.exoplayer2.ExoPlaybackException
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.PlaybackParameters
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.audio.AudioListener
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.source.TrackGroupArray
@@ -21,8 +35,10 @@ import com.google.android.exoplayer2.util.Util
 import com.google.gson.Gson
 import timber.log.Timber
 
-class VideoViewModel(app: Application) : AndroidViewModel(app), Player.EventListener,
-    LifecycleObserver {
+class VideoViewModel(app: Application, val userRepository: UserRepository) : AndroidViewModel(app),
+    Player.EventListener,
+    LifecycleObserver,
+    AudioListener {
 
 
     // For Video Player
@@ -38,8 +54,8 @@ class VideoViewModel(app: Application) : AndroidViewModel(app), Player.EventList
     private var dataSourceFactory: DataSource.Factory? = null
 
     private var startAutoPlay: Boolean = false
-    private var startWindow: Int = 0
-    private var startPosition: Long = 0
+    private var startWindowIndex: Int = 0
+    private var startDuration: Long = 0
 
     private val gson = Gson()
     private var lowQuality: Boolean = true
@@ -51,11 +67,11 @@ class VideoViewModel(app: Application) : AndroidViewModel(app), Player.EventList
     val videoLoading: MutableLiveData<Boolean> = MutableLiveData(false)
 
 
-    val PLAY_ICON_RES = com.ericdream.erictv.R.drawable.ic_play_circle_outline_white_24dp
-    val PAUSE_ICON_RES = com.ericdream.erictv.R.drawable.ic_pause_circle_outline_white_24dp
+    val PLAY_ICON_RES = R.drawable.ic_play_circle_outline_white_24dp
+    val PAUSE_ICON_RES = R.drawable.ic_pause_circle_outline_white_24dp
     val playIconRes: LiveData<Int>
-    val playIconRes2: MutableLiveData<Int> = MutableLiveData(PLAY_ICON_RES)
-
+    val volumeIconRes: MutableLiveData<Int> = MutableLiveData(R.drawable.ic_volume_up_white_24dp)
+    val userSettingIO = userRepository.getUserSetting()
     init {
         playIconRes = Transformations.map(videoPlay) { input ->
             when (input) {
@@ -115,7 +131,6 @@ class VideoViewModel(app: Application) : AndroidViewModel(app), Player.EventList
         }
     }
 
-
     fun setUpPlayer() {
         trackSelector = DefaultTrackSelector()
 
@@ -123,7 +138,12 @@ class VideoViewModel(app: Application) : AndroidViewModel(app), Player.EventList
 
         player.value?.let {
             it.addListener(this)
-            it.prepare(mediaSource)
+            it.audioComponent?.addAudioListener(this)
+            it.prepare(mediaSource, false, true)
+            it.seekTo(startWindowIndex, startDuration)
+
+            val sound = if (userSettingIO.defaultSound) 1f else 0f
+            it.audioComponent?.volume = sound
         }
 
 
@@ -133,12 +153,25 @@ class VideoViewModel(app: Application) : AndroidViewModel(app), Player.EventList
 
     fun releasePlayer() {
         Timber.i("Release PLayer")
-        _player.value?.let {
-            it.playWhenReady = false
+        (_player.value as? SimpleExoPlayer)?.let {
+            //save data
+            startWindowIndex = it.currentWindowIndex
+            startDuration = it.currentPosition
+            it.currentTimeline
+            it.audioComponent?.removeAudioListener(this)
+            userSettingIO.defaultSound = (it.volume > 0f)
+            userRepository.setUserSetting(userSettingIO)
+            //
             it.release()
         }
 
         _player.postValue(null)
+    }
+
+    override fun onVolumeChanged(volume: Float) {
+        val nextResInt =
+            if (volume > 0) R.drawable.ic_volume_up_white_24dp else R.drawable.ic_volume_off_white_24dp
+        volumeIconRes.value = nextResInt
     }
 
     private fun createTrackSelectorParameter(): DefaultTrackSelector.Parameters {
@@ -162,7 +195,8 @@ class VideoViewModel(app: Application) : AndroidViewModel(app), Player.EventList
 
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
         videoPlay.value = (playWhenReady)
-        Timber.d("playWhenReady = $playWhenReady, playbackState = $playbackState")
+        val playbackStateString: String = PlaybackStateDecoder.decodePlaybackState(playbackState)
+        Timber.d("playWhenReady = $playWhenReady, playbackState = $playbackStateString")
 
 
     }

@@ -29,3 +29,9 @@ fun RecyclerView.setLiveChannels(list: List<LiveChannel>?) {
     }
 
 }
+
+@BindingAdapter("android:src")
+fun ImageView.setImageViewResource(int: Int) {
+    this.setImageResource(int)
+
+}

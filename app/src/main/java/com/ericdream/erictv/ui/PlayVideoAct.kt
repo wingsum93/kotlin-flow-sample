@@ -1,9 +1,11 @@
 package com.ericdream.erictv.ui
 
+import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.ericdream.erictv.C
@@ -23,6 +25,7 @@ class PlayVideoAct : AppCompatActivity() {
 
     private lateinit var uri: Uri
     private lateinit var liveChannel: LiveChannel
+    private lateinit var audioManager: AudioManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +38,9 @@ class PlayVideoAct : AppCompatActivity() {
 
         uri = intent.getParcelableExtra(C.Key.URI) as Uri
         liveChannel = intent.getSerializableExtra(C.Key.LIVECHANNEL) as LiveChannel
-
-
+        audioManager = getSystemService()!!
+        val volume_level: Int = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume_level, 0)
 
         viewModel.player.observe(this, Observer {
             binding.playerView?.player = it
@@ -61,10 +65,12 @@ class PlayVideoAct : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         viewModel.setUpPlayer()
+        Timber.d("onStart")
     }
 
     override fun onStop() {
         viewModel.releasePlayer()
+        Timber.d("onStop")
         super.onStop()
     }
     override fun onDestroy() {

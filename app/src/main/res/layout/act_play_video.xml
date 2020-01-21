@@ -31,9 +31,9 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:onClick="@{vm::playIconClick}"
-            android:src="@{vm.videoPlay ? @drawable/ic_pause_circle_outline_white_24dp : @drawable/ic_play_circle_outline_white_24dp}"
-            app:layout_constraintBottom_toBottomOf="@id/player_view"
-            app:layout_constraintRight_toRightOf="@id/player_view"
+            android:src="@{vm.playIconRes, default=@drawable/ic_pause_circle_outline_white_24dp }"
+            app:layout_constraintBottom_toBottomOf="@id/controller_root"
+            app:layout_constraintRight_toRightOf="@id/controller_root"
             tools:src="@drawable/ic_pause_circle_outline_white_24dp" />
 
         <ImageView
@@ -41,10 +41,10 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:onClick="@{vm::volumeIconClick}"
-            android:src="@{@drawable/ic_volume_off_white_24dp}"
+            android:src="@{vm.volumeIconRes, default=@drawable/ic_volume_up_white_24dp}"
 
-            app:layout_constraintBottom_toBottomOf="@id/player_view"
-            app:layout_constraintLeft_toLeftOf="@id/player_view"
+            app:layout_constraintBottom_toBottomOf="@id/controller_root"
+            app:layout_constraintLeft_toLeftOf="@id/controller_root"
             tools:src="@drawable/ic_volume_up_white_24dp" />
 
         <ImageView
@@ -58,5 +58,13 @@
             app:layout_constraintRight_toLeftOf="@id/playBtn"
             tools:src="@drawable/ic_volume_up_white_24dp" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/controller_root"
+            app:layout_constraintLeft_toLeftOf="@id/player_view"
+            app:layout_constraintRight_toRightOf="@id/player_view"
+            app:layout_constraintTop_toTopOf="@id/player_view"
+            app:layout_constraintBottom_toBottomOf="@id/player_view" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
