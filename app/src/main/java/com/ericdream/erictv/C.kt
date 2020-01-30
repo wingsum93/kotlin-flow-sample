@@ -14,6 +14,8 @@ object C {
         "https://yt3.ggpht.com/a/AGF-l7_fMTospARmgQ60hAyJIYqKer7799fcfgDt=s288-c-k-c0xffffffff-no-rj-mo"
     const val LOCAL_HLS_H_LINK =
         "http://192.168.1.100:8080/hls/%e5%ae%b6%e6%9c%89%e5%96%9c%e4%ba%8b3/index.m3u8"
+    const val NETWORK_HLS_LINK =
+        "https://s3.ap-northeast-1.amazonaws.com/www.eric-dream.com/streaming/%E5%B0%8F%E7%94%B7%E4%BA%BA%E5%91%A8%E8%A8%98%E4%B9%8B%E5%90%BE%E5%AE%B6%E6%9C%89%E5%96%9C/index.m3u8"
 
     object Icon {
         const val VIUTV =

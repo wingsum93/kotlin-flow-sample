@@ -50,7 +50,7 @@ class LiveChannelRepo constructor(private val generater: LiveLinkGenerater) {
         livechannels += LiveChannel.liveChannel {
             name = "XXX TV"
             iconLink = C.Icon.OPENTV
-            link = C.LOCAL_HLS_H_LINK
+            link = C.NETWORK_HLS_LINK
             key = "xxxtv"
         }
     }

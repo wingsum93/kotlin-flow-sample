@@ -35,6 +35,9 @@ import com.google.android.exoplayer2.util.Util
 import com.google.gson.Gson
 import timber.log.Timber
 
+/**
+ * A Live video view model
+ */
 class VideoViewModel(app: Application, val userRepository: UserRepository) : AndroidViewModel(app),
     Player.EventListener,
     LifecycleObserver,
@@ -71,7 +74,11 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
     val PAUSE_ICON_RES = R.drawable.ic_pause_circle_outline_white_24dp
     val playIconRes: LiveData<Int>
     val volumeIconRes: MutableLiveData<Int> = MutableLiveData(R.drawable.ic_volume_up_white_24dp)
-    val userSettingIO = userRepository.getUserSetting()
+
+    private val userSettingIO = userRepository.getUserSetting()
+
+    val showControllerLiveData: MutableLiveData<Boolean> = MutableLiveData(true)
+
     init {
         playIconRes = Transformations.map(videoPlay) { input ->
             when (input) {

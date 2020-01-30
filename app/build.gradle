@@ -78,7 +78,8 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-hls:2.10.4'
     implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:2.10.4'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.10.4'
-
+    // Exoplayer Extension
+    implementation 'com.google.android.exoplayer:extension-okhttp:2.10.4'
 
     // Network
     implementation "com.squareup.okhttp3:okhttp:4.2.1"
