@@ -32,6 +32,10 @@ object C {
             "https://thematrix.dev/tvhk/rthktv32.jpg"
     }
 
+    object Data {
+        const val video_cdn_1 = "d25hl4oq2vxbl1.cloudfront.net"
+        const val video_cdn_2 = "video.eric-dream.com"
+    }
 
     object Key {
         const val URI = "URI"

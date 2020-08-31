@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View" />
         <variable
             name="vm"
             type="com.ericdream.erictv.ui.playvideo.VideoViewModel" />
@@ -80,7 +80,7 @@
             android:id="@+id/group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{vm.showControllerLiveData, default = visible}"
+            android:visibility="@{vm.showControllerLiveData? View.VISIBLE: View.GONE}"
             app:constraint_referenced_ids="controller_root,playBtn,volume,fullScreenBtn,live_text,red_dot" />
 
         <TextView

@@ -77,7 +77,7 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
 
     private val userSettingIO = userRepository.getUserSetting()
 
-    val showControllerLiveData: MutableLiveData<Boolean> = MutableLiveData(true)
+    val showControllerLiveData: MutableLiveData<Boolean> = MutableLiveData(false)
 
     init {
         playIconRes = Transformations.map(videoPlay) { input ->
