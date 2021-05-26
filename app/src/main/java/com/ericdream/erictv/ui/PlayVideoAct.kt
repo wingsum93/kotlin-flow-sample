@@ -13,6 +13,7 @@ import com.ericdream.erictv.R
 import com.ericdream.erictv.data.model.LiveChannel
 import com.ericdream.erictv.databinding.ActPlayVideoBinding
 import com.ericdream.erictv.ui.playvideo.VideoViewModel
+import kotlinx.android.synthetic.main.act_play_video.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -43,9 +44,9 @@ class PlayVideoAct : AppCompatActivity() {
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume_level, 0)
 
         Timber.i("Player updated !!")
-
+        player_view.player = viewModel.player
         viewModel.videoPlay.observe(this, Observer { playState ->
-
+            Timber.d("aaa")
         })
 
         // Start video

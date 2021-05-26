@@ -13,6 +13,7 @@ import com.ericdream.erictv.R
 import com.ericdream.erictv.data.repo.UserRepository
 import com.ericdream.erictv.util.PlaybackStateDecoder
 import com.google.android.exoplayer2.ExoPlaybackException
+import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioListener
@@ -94,8 +95,12 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
         trackSelectorParameters = createTrackSelectorParameter()
 
         mediaSource = buildMediaSource(uri, null)
-        player.prepare(mediaSource!!, false, true)
-        player.seekTo(startWindowIndex, startDuration)
+        val item = MediaItem.fromUri(uri)
+//        player.prepare(mediaSource!!, false, true)
+        player.setMediaItem(item)
+        player.prepare()
+        player.play()
+//        player.seekTo(startWindowIndex, startDuration)
     }
 
 
