@@ -1,5 +1,6 @@
 package com.ericdream.erictv
 
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import java.text.DateFormat
@@ -13,14 +14,12 @@ import javax.crypto.spec.SecretKeySpec
  */
 @RunWith(JUnit4::class)
 class AwsAuthTest {
-
     val method = "GET"
     val service = "S3"
     val host = "s3.amazonaws.com"
     val region = "ap-northeast-1"
     val endpoint = "https://s3.amazonaws.com"
     val request_parameters = "Action=DescribeRegions&Version=2013-10-15"
-
 
     @Throws(Exception::class)
     fun HmacSHA256(data: String, key: ByteArray?): ByteArray {
@@ -44,20 +43,15 @@ class AwsAuthTest {
         return HmacSHA256("aws4_request", kService)
     }
 
+    @Test
     fun startProcess() {
         //read from env
         val access_key = "AWS_ACCESS_KEY_ID"
         val secret_key = "AWS_SECRET_ACCESS_KEY"
-
         // Create a date for headers and the credential string
         val df: DateFormat = DateFormat.getTimeInstance()
         df.setTimeZone(TimeZone.getTimeZone("gmt"))
         val gmtTime: String = df.format(Date())
         println(gmtTime)
-
     }
-}
-
-private fun String.encode(string: String): String {
-    return ""
 }
