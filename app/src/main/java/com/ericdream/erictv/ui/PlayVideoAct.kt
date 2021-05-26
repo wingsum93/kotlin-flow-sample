@@ -1,107 +1,79 @@
 package com.ericdream.erictv.ui
 
+import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
-import com.ericdream.erictv.App
+import androidx.lifecycle.Observer
 import com.ericdream.erictv.C
 import com.ericdream.erictv.R
+import com.ericdream.erictv.data.model.LiveChannel
 import com.ericdream.erictv.databinding.ActPlayVideoBinding
 import com.ericdream.erictv.ui.playvideo.VideoViewModel
-import com.google.android.exoplayer2.ExoPlayerFactory
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.source.TrackGroupArray
-import com.google.android.exoplayer2.source.dash.DashMediaSource
-import com.google.android.exoplayer2.source.hls.HlsMediaSource
-import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.ui.DebugTextViewHelper
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.util.Util
+import kotlinx.android.synthetic.main.act_play_video.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class PlayVideoAct : AppCompatActivity() {
 
 
-    lateinit var viewDataBinding: ActPlayVideoBinding
+    lateinit var binding: ActPlayVideoBinding
     private val viewModel by viewModel<VideoViewModel>()
 
-    // For Video Player
-    private var player: SimpleExoPlayer? = null
-    private var mediaSource: MediaSource? = null
-    private var trackSelector: DefaultTrackSelector? = null
-    private var trackSelectorParameters: DefaultTrackSelector.Parameters? = null
-    private var debugViewHelper: DebugTextViewHelper? = null
-    private var lastSeenTrackGroupArray: TrackGroupArray? = null
-    private var dataSourceFactory: DataSource.Factory? = null
-
-    private var startAutoPlay: Boolean = false
-    private var startWindow: Int = 0
-    private var startPosition: Long = 0
 
     private lateinit var uri: Uri
+    private lateinit var liveChannel: LiveChannel
+    private lateinit var audioManager: AudioManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewDataBinding = DataBindingUtil.setContentView(this, R.layout.act_play_video)
+        binding = DataBindingUtil.setContentView(this, R.layout.act_play_video)
 
-        viewDataBinding.lifecycleOwner = this
-        viewDataBinding.vm = viewModel
+        binding.lifecycleOwner = this
+        binding.vm = viewModel
         //get data
 
         uri = intent.getParcelableExtra(C.Key.URI) as Uri
-        viewDataBinding.playerView
+        liveChannel = intent.getSerializableExtra(C.Key.LIVECHANNEL) as LiveChannel
+        audioManager = getSystemService()!!
+        val volume_level: Int = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume_level, 0)
+
+        Timber.i("Player updated !!")
+        player_view.player = viewModel.player
+        viewModel.videoPlay.observe(this, Observer { playState ->
+            Timber.d("aaa")
+        })
+
+        // Start video
+        viewModel.loadVideo(uri)
 
 
-        trackSelector = DefaultTrackSelector()
-        player = ExoPlayerFactory.newSimpleInstance(this, trackSelector)
-        viewDataBinding.playerView?.player = player
-        //
-        dataSourceFactory = buildDataSourceFactory()
-        mediaSource = buildMediaSource(uri, null)
+        title = liveChannel.name
 
-        player?.playWhenReady = true
-
-        player?.prepare(mediaSource)
-
-
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
-    private fun buildMediaSource(uri: Uri, overrideExtension: String?): MediaSource {
 
-        @com.google.android.exoplayer2.C.ContentType val type =
-            Util.inferContentType(uri, overrideExtension)
-        when (type) {
-            com.google.android.exoplayer2.C.TYPE_DASH -> return DashMediaSource.Factory(
-                dataSourceFactory
-            ).createMediaSource(uri)
-            com.google.android.exoplayer2.C.TYPE_SS -> return SsMediaSource.Factory(
-                dataSourceFactory
-            ).createMediaSource(uri)
-            com.google.android.exoplayer2.C.TYPE_HLS -> return HlsMediaSource.Factory(
-                dataSourceFactory
-            ).createMediaSource(uri)
-            com.google.android.exoplayer2.C.TYPE_OTHER -> return ProgressiveMediaSource.Factory(
-                dataSourceFactory
-            ).createMediaSource(uri)
-            else -> throw IllegalStateException("Unsupported type: $type")
-        }
+    override fun onStart() {
+        super.onStart()
+        viewModel.setUpPlayer()
+        Timber.d("onStart")
     }
 
-    /**
-     * Returns a new DataSource factory.
-     */
-    private fun buildDataSourceFactory(): DataSource.Factory {
-        return (application as App).buildDataSourceFactory()
+    override fun onStop() {
+        viewModel.releasePlayer()
+        Timber.d("onStop")
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        super.onStop()
     }
-
 
     override fun onDestroy() {
-        player?.release()
+
         super.onDestroy()
     }
 }

@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.ericdream.erictv"
         minSdkVersion 21
@@ -25,6 +25,9 @@ android {
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
     dataBinding {
         enabled = true
     }
@@ -37,26 +40,26 @@ ext {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
     def multidex_version = "2.0.1"
     implementation "androidx.multidex:multidex:$multidex_version"
 
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'androidx.fragment:fragment:1.1.0'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'androidx.core:core-ktx:1.5.0'
+    implementation 'androidx.fragment:fragment-ktx:1.3.4'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     // ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
-    def recyclerview_version = "1.0.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
+    kapt "androidx.lifecycle:lifecycle-compiler:2.3.1"
+    def recyclerview_version = "1.1.0-rc01"
 
-    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+    implementation "androidx.recyclerview:recyclerview:1.2.0"
     // For control over item selection of both touch and mouse driven selection
-    implementation "androidx.recyclerview:recyclerview-selection:$recyclerview_version"
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
 
     // Koin for Kotlin
     implementation "org.koin:koin-core:$koin_version"
@@ -70,12 +73,13 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
     // Exoplayer2
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.10.4'
-    implementation 'com.google.android.exoplayer:exoplayer-dash:2.10.1'
-    implementation 'com.google.android.exoplayer:exoplayer-hls:2.10.4'
-    implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:2.10.4'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:2.10.4'
-
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.14.0'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.14.0'
+    implementation 'com.google.android.exoplayer:exoplayer-hls:2.14.0'
+    implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:2.14.0'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.14.0'
+    // Exoplayer Extension
+    implementation 'com.google.android.exoplayer:extension-okhttp:2.14.0'
 
     // Network
     implementation "com.squareup.okhttp3:okhttp:4.2.1"
@@ -92,6 +96,6 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.10.0'
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
