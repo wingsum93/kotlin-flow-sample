@@ -63,6 +63,7 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
     private val gson = Gson()
     private var lowQuality: Boolean = true
     private var init: Boolean = false
+
     /**
      * Indicate the play state of video
      */
@@ -73,11 +74,13 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
     val PLAY_ICON_RES = R.drawable.ic_play_circle_outline_white_24dp
     val PAUSE_ICON_RES = R.drawable.ic_pause_circle_outline_white_24dp
     val playIconRes: LiveData<Int>
-    val volumeIconRes: MutableLiveData<Int> = MutableLiveData(R.drawable.ic_volume_up_white_24dp)
+    val volumeIconRes: MutableLiveData<Int> =
+        MutableLiveData(R.drawable.ic_volume_up_white_24dp)
 
     private val userSettingIO = userRepository.getUserSetting()
 
-    val showControllerLiveData: MutableLiveData<Boolean> = MutableLiveData(false)
+    val showControllerLiveData: MutableLiveData<Boolean> = MutableLiveData(true)
+
 
     init {
         playIconRes = Transformations.map(videoPlay) { input ->
@@ -89,7 +92,7 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
         }
     }
 
-    fun init(uri: Uri, liveChannel: LiveChannel) {
+    fun init(uri: Uri, liveChannel: LiveChannel?) {
         if (!init) {
             Timber.d("HIHI UYI!!")
             init = true
@@ -99,7 +102,7 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
 
     }
 
-    fun initImplementation(uri: Uri) {
+    private fun initImplementation(uri: Uri) {
 
         dataSourceFactory = buildDataSourceFactory()
 

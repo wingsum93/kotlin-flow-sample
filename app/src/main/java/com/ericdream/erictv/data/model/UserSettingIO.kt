@@ -3,6 +3,5 @@ package com.ericdream.erictv.data.model
 import java.io.Serializable
 
 class UserSettingIO : Serializable {
-
-    var defaultSound: Boolean = false
+    var defaultSound: Boolean = true
 }

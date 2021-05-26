@@ -71,6 +71,7 @@ class PlayVideoAct : AppCompatActivity() {
     override fun onStop() {
         viewModel.releasePlayer()
         Timber.d("onStop")
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         super.onStop()
     }
     override fun onDestroy() {

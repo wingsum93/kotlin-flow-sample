@@ -8,7 +8,7 @@ import com.ericdream.erictv.data.model.LiveChannel
 import com.ericdream.erictv.ui.home.ChannelAdapter
 
 
-@BindingAdapter("app:imageUrl")
+@BindingAdapter("imageUrl")
 fun ImageView.setImageUrl(string: String?) {
     string?.let {
         Glide
@@ -19,7 +19,7 @@ fun ImageView.setImageUrl(string: String?) {
     }
 }
 
-@BindingAdapter("app:items")
+@BindingAdapter("items")
 fun RecyclerView.setLiveChannels(list: List<LiveChannel>?) {
     val adapter = this.adapter
     if (adapter is ChannelAdapter) {

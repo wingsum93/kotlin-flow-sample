@@ -30,7 +30,6 @@ class MainViewModel() : ViewModel(), OnChannelSelectListener, KoinComponent {
 
     fun loadChannel() {
         text.postValue("Hellow X!")
-
         channels.postValue(repo.getLiveChannels())
 
     }
