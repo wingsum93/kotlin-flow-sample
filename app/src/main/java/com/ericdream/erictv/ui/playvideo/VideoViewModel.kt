@@ -86,7 +86,6 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
                 true -> return@map PAUSE_ICON_RES
                 else -> return@map PLAY_ICON_RES
             }
-
         }
     }
 
@@ -97,7 +96,7 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
         mediaSource = buildMediaSource(uri, null)
         val item = MediaItem.fromUri(uri)
 //        player.prepare(mediaSource!!, false, true)
-        player.setMediaItem(item)
+        player.setMediaSource(mediaSource!!)
         player.prepare()
         player.play()
 //        player.seekTo(startWindowIndex, startDuration)
@@ -179,11 +178,6 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
     }
 
 
-
-    override fun onSeekProcessed() {
-        super.onSeekProcessed()
-    }
-
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
         videoPlay.value = (playWhenReady)
         val playbackStateString: String = PlaybackStateDecoder.decodePlaybackState(playbackState)
@@ -208,19 +202,20 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
 
         @com.google.android.exoplayer2.C.ContentType val type =
             Util.inferContentType(uri, overrideExtension)
+        val item = MediaItem.fromUri(uri)
         return when (type) {
             com.google.android.exoplayer2.C.TYPE_DASH -> DashMediaSource.Factory(
                 dataSourceFactory
-            ).createMediaSource(uri)
+            ).createMediaSource(item)
             com.google.android.exoplayer2.C.TYPE_SS -> SsMediaSource.Factory(
                 dataSourceFactory
-            ).createMediaSource(uri)
+            ).createMediaSource(item)
             com.google.android.exoplayer2.C.TYPE_HLS -> HlsMediaSource.Factory(
                 dataSourceFactory
-            ).createMediaSource(uri)
+            ).createMediaSource(item)
             com.google.android.exoplayer2.C.TYPE_OTHER -> ProgressiveMediaSource.Factory(
                 dataSourceFactory
-            ).createMediaSource(uri)
+            ).createMediaSource(item)
             else -> throw IllegalStateException("Unsupported type: $type")
         }
     }

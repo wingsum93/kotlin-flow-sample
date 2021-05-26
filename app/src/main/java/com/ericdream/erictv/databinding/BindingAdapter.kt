@@ -4,6 +4,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ericdream.erictv.R
 import com.ericdream.erictv.data.model.LiveChannel
 import com.ericdream.erictv.ui.home.ChannelAdapter
 
@@ -14,6 +15,7 @@ fun ImageView.setImageUrl(string: String?) {
         Glide
             .with(this)
             .load(string)
+            .error(R.drawable.ic_baseline_help_24)
             .into(this)
 
     }
