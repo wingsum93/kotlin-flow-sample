@@ -102,7 +102,7 @@
             android:layout_height="40dp"
             android:padding="10dp"
             android:src="@drawable/ic_lens_black_24dp"
-            android:tint="@color/red_A400"
+            app:tint="@color/red_A400"
             app:layout_constraintBottom_toBottomOf="@id/player_view"
             app:layout_constraintRight_toLeftOf="@id/live_text" />
     </androidx.constraintlayout.widget.ConstraintLayout>

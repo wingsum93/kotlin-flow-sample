@@ -9,15 +9,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.Transformations
-import com.ericdream.erictv.App
 import com.ericdream.erictv.R
-import com.ericdream.erictv.data.model.LiveChannel
 import com.ericdream.erictv.data.repo.UserRepository
 import com.ericdream.erictv.util.PlaybackStateDecoder
 import com.google.android.exoplayer2.ExoPlaybackException
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.ExoPlayerFactory
-import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioListener
@@ -29,10 +24,13 @@ import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
-import com.google.android.exoplayer2.ui.DebugTextViewHelper
+import com.google.android.exoplayer2.trackselection.TrackSelector
 import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.util.DebugTextViewHelper
 import com.google.android.exoplayer2.util.Util
 import com.google.gson.Gson
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import timber.log.Timber
 
 /**
@@ -41,20 +39,19 @@ import timber.log.Timber
 class VideoViewModel(app: Application, val userRepository: UserRepository) : AndroidViewModel(app),
     Player.EventListener,
     LifecycleObserver,
-    AudioListener {
+    AudioListener, KoinComponent {
 
 
     // For Video Player
-    val _player: MutableLiveData<ExoPlayer?> = MutableLiveData()
-    val player: LiveData<ExoPlayer?>
-        get() = _player
+    val player: SimpleExoPlayer by inject()
+
 
     private var mediaSource: MediaSource? = null
-    private var trackSelector: DefaultTrackSelector? = null
+    private val trackSelector: TrackSelector by inject()
     private var trackSelectorParameters: DefaultTrackSelector.Parameters? = null
     private var debugViewHelper: DebugTextViewHelper? = null
     private var lastSeenTrackGroupArray: TrackGroupArray? = null
-    private var dataSourceFactory: DataSource.Factory? = null
+    private val dataSourceFactory: DataSource.Factory by inject()
 
     private var startAutoPlay: Boolean = false
     private var startWindowIndex: Int = 0
@@ -92,24 +89,13 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
         }
     }
 
-    fun init(uri: Uri, liveChannel: LiveChannel?) {
-        if (!init) {
-            Timber.d("HIHI UYI!!")
-            init = true
-            initImplementation(uri)
 
-        }
-
-    }
-
-    private fun initImplementation(uri: Uri) {
-
-        dataSourceFactory = buildDataSourceFactory()
-
+    fun loadVideo(uri: Uri) {
         trackSelectorParameters = createTrackSelectorParameter()
 
         mediaSource = buildMediaSource(uri, null)
-
+        player.prepare(mediaSource!!, false, true)
+        player.seekTo(startWindowIndex, startDuration)
     }
 
 
@@ -118,7 +104,7 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
     }
 
     fun volumeIconClick(view: View) {
-        player.value?.let {
+        player.let {
             val a = it as SimpleExoPlayer
             //
             val volume = a.volume
@@ -136,34 +122,28 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
     }
 
     private fun playOrPause() {
-        player.value?.let {
+        player.let {
             it.playWhenReady = !it.playWhenReady
         }
     }
 
     fun setUpPlayer() {
-        trackSelector = DefaultTrackSelector()
 
-        _player.value = ExoPlayerFactory.newSimpleInstance(getApplication(), trackSelector)
-
-        player.value?.let {
+        player.let {
             it.addListener(this)
             it.audioComponent?.addAudioListener(this)
-            it.prepare(mediaSource, false, true)
-            it.seekTo(startWindowIndex, startDuration)
-
             val sound = if (userSettingIO.defaultSound) 1f else 0f
             it.audioComponent?.volume = sound
         }
 
 
+
         Timber.i("SetUp PLayer")
     }
 
-
     fun releasePlayer() {
         Timber.i("Release PLayer")
-        (_player.value as? SimpleExoPlayer)?.let {
+        player.let {
             //save data
             startWindowIndex = it.currentWindowIndex
             startDuration = it.currentPosition
@@ -174,8 +154,6 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
             //
             it.release()
         }
-
-        _player.postValue(null)
     }
 
     override fun onVolumeChanged(volume: Float) {
@@ -195,9 +173,7 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
         videoLoading.postValue(isLoading)
     }
 
-    override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {
-        super.onPlaybackParametersChanged(playbackParameters)
-    }
+
 
     override fun onSeekProcessed() {
         super.onSeekProcessed()
@@ -212,22 +188,15 @@ class VideoViewModel(app: Application, val userRepository: UserRepository) : And
     }
 
     override fun onTracksChanged(
-        trackGroups: TrackGroupArray?,
-        trackSelections: TrackSelectionArray?
+        trackGroups: TrackGroupArray,
+        trackSelections: TrackSelectionArray
     ) {
         Timber.d(gson.toJson(trackGroups))
         super.onTracksChanged(trackGroups, trackSelections)
     }
 
-    override fun onPlayerError(error: ExoPlaybackException?) {
+    override fun onPlayerError(error: ExoPlaybackException) {
         super.onPlayerError(error)
-    }
-
-    /**
-     * Returns a new DataSource factory.
-     */
-    private fun buildDataSourceFactory(): DataSource.Factory {
-        return getApplication<App>().buildDataSourceFactory()
     }
 
     private fun buildMediaSource(uri: Uri, overrideExtension: String?): MediaSource {

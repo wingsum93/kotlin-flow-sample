@@ -42,23 +42,19 @@ class PlayVideoAct : AppCompatActivity() {
         val volume_level: Int = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume_level, 0)
 
-        viewModel.player.observe(this, Observer {
-            binding.playerView?.player = it
-            Timber.i("Player updated !!")
-            it?.playWhenReady = true
-        })
+        Timber.i("Player updated !!")
+
         viewModel.videoPlay.observe(this, Observer { playState ->
 
         })
 
         // Start video
-        viewModel.init(uri, liveChannel)
+        viewModel.loadVideo(uri)
 
 
         title = liveChannel.name
 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-
     }
 
 
@@ -74,6 +70,7 @@ class PlayVideoAct : AppCompatActivity() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         super.onStop()
     }
+
     override fun onDestroy() {
 
         super.onDestroy()

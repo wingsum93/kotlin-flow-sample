@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.ericdream.erictv"
         minSdkVersion 21
@@ -73,13 +73,13 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
     // Exoplayer2
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.10.4'
-    implementation 'com.google.android.exoplayer:exoplayer-dash:2.10.1'
-    implementation 'com.google.android.exoplayer:exoplayer-hls:2.10.4'
-    implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:2.10.4'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:2.10.4'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.14.0'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.14.0'
+    implementation 'com.google.android.exoplayer:exoplayer-hls:2.14.0'
+    implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:2.14.0'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.14.0'
     // Exoplayer Extension
-    implementation 'com.google.android.exoplayer:extension-okhttp:2.10.4'
+    implementation 'com.google.android.exoplayer:extension-okhttp:2.14.0'
 
     // Network
     implementation "com.squareup.okhttp3:okhttp:4.2.1"
@@ -96,6 +96,6 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.10.0'
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
