@@ -45,11 +45,11 @@ dependencies {
     def multidex_version = "2.0.1"
     implementation "androidx.multidex:multidex:$multidex_version"
 
-    implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'androidx.core:core-ktx:1.5.0'
-    implementation 'androidx.fragment:fragment-ktx:1.3.4'
-    implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.fragment:fragment-ktx:1.3.6'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
@@ -57,7 +57,7 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-compiler:2.3.1"
     def recyclerview_version = "1.1.0-rc01"
 
-    implementation "androidx.recyclerview:recyclerview:1.2.0"
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
     // For control over item selection of both touch and mouse driven selection
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
 
@@ -73,29 +73,29 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
     // Exoplayer2
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.14.0'
-    implementation 'com.google.android.exoplayer:exoplayer-dash:2.14.0'
-    implementation 'com.google.android.exoplayer:exoplayer-hls:2.14.0'
-    implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:2.14.0'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:2.14.0'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.14.2'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.14.2'
+    implementation 'com.google.android.exoplayer:exoplayer-hls:2.14.2'
+    implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:2.14.2'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.14.2'
     // Exoplayer Extension
-    implementation 'com.google.android.exoplayer:extension-okhttp:2.14.0'
+    implementation 'com.google.android.exoplayer:extension-okhttp:2.14.2'
 
     // Network
-    implementation "com.squareup.okhttp3:okhttp:4.2.1"
-    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
-    implementation "com.squareup.retrofit2:converter-gson:2.6.0"
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation "com.squareup.okhttp3:okhttp:4.3.1"
+    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
+    implementation "com.squareup.retrofit2:converter-gson:2.7.1"
+    implementation 'com.google.code.gson:gson:2.8.7'
 
     // Logging
     implementation 'com.facebook.stetho:stetho:1.5.1'
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
-    implementation 'com.jakewharton.timber:timber:4.5.1'
+    implementation 'com.jakewharton.timber:timber:4.7.1'
     // Glide
-    implementation 'com.github.bumptech.glide:glide:4.10.0'
-    kapt 'com.github.bumptech.glide:compiler:4.10.0'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
