@@ -13,7 +13,7 @@ import com.ericdream.erictv.R
 import com.ericdream.erictv.data.model.LiveChannel
 import com.ericdream.erictv.databinding.ActPlayVideoBinding
 import com.ericdream.erictv.ui.playvideo.VideoViewModel
-import kotlinx.android.synthetic.main.act_play_video.*
+import com.google.android.exoplayer2.ui.PlayerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -24,7 +24,7 @@ class PlayVideoAct : AppCompatActivity() {
     private val viewModel by viewModel<VideoViewModel>()
 
 
-    private lateinit var uri: Uri
+    private var uri: Uri? = null
     private lateinit var liveChannel: LiveChannel
     private lateinit var audioManager: AudioManager
 
@@ -37,22 +37,24 @@ class PlayVideoAct : AppCompatActivity() {
         binding.vm = viewModel
         //get data
 
-        uri = intent.getParcelableExtra(C.Key.URI) as Uri
+        uri = intent.getParcelableExtra(C.Key.URI)
         liveChannel = intent.getSerializableExtra(C.Key.LIVECHANNEL) as LiveChannel
         audioManager = getSystemService()!!
         val volume_level: Int = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume_level, 0)
 
         Timber.i("Player updated !!")
-        player_view.player = viewModel.player
+        val exoplayView = findViewById<PlayerView>(R.id.player_view)
+        exoplayView.player = viewModel.player
+
         viewModel.videoPlay.observe(this, Observer { playState ->
             Timber.d("aaa")
         })
 
         // Start video
-        viewModel.loadVideo(uri)
-
-
+        uri?.let {
+            viewModel.loadVideo(it)
+        }
         title = liveChannel.name
 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
