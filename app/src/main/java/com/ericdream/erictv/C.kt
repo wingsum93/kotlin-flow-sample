@@ -19,17 +19,17 @@ object C {
 
     object Icon {
         const val VIUTV =
-            "https://thematrix.dev/tvhk/viutv.jpg"
+            "https://i.ibb.co/jT88Vyw/viutv-icon.png"
         const val NOWTV =
-            "https://thematrix.dev/tvhk/nowtv.jpg"
+            "https://i.ibb.co/PzfwBwv/nowtv.jpg"
         const val OPENTV =
-            "https://thematrix.dev/tvhk/opentv.jpg"
+            "https://i.ibb.co/Rj3Zd7G/opentv.png"
         const val CABLETV =
-            "https://thematrix.dev/tvhk/cabletv.jpg"
+            "https://i.ibb.co/tmCGZND/icable-1-300x300.png"
         const val RTHK1 =
-            "https://thematrix.dev/tvhk/rthktv31.jpg"
+            "https://i.ibb.co/3snzqxN/rthktv-live.jpg"
         const val RTHK2 =
-            "https://thematrix.dev/tvhk/rthktv32.jpg"
+            "https://i.ibb.co/z2t4J3G/rthk32.png"
     }
 
     object Data {
