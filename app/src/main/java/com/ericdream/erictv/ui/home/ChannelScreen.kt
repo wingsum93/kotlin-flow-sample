@@ -2,10 +2,7 @@ package com.ericdream.erictv.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -34,7 +31,9 @@ fun ChannelScreen(
                             .width(80.dp)
                             .height(50.dp)
                     )
-                    Text(text = item.name)
+                    Column(modifier = Modifier.padding(10.dp)) {
+                        Text(text = item.name, modifier = Modifier)
+                    }
                 }
 
             }
