@@ -2,6 +2,7 @@ package com.ericdream.erictv.ui.home
 
 import android.net.Uri
 import android.os.Bundle
+import androidx.compose.runtime.mutableStateListOf
 import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,13 +25,17 @@ class MainViewModel() : ViewModel(), OnChannelSelectListener, KoinComponent {
 
     val targetClass = MutableLiveData<Pair<KClass<*>, Bundle?>>()
 
-    val channels: MutableLiveData<List<LiveChannel>> = MutableLiveData()
-
+    //    private val _channels: MutableLiveData<List<LiveChannel>> = MutableLiveData()
+//    val channels: LiveData<List<LiveChannel>> = _channels
     private val repo: LiveChannelRepo by inject()
+
+    var channels = mutableStateListOf<LiveChannel>()
+        private set
 
     fun loadChannel() {
         text.postValue("Hellow X!")
-        channels.postValue(repo.getLiveChannels())
+//        channels.postValue(repo.getLiveChannels())
+        channels.addAll(repo.getLiveChannels())
 
     }
 
