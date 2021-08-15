@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
         vm: MainViewModel = viewModel()
     ) {
         vm.loadChannel()
-        ChannelScreen(viewModel = vm)
+        ChannelScreen(viewModel = vm, onItemClick = {})
     }
 
     private fun goToNextClass(pair: Pair<KClass<*>, Bundle?>) {
