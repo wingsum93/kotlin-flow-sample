@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,7 +20,9 @@ fun ChannelScreen(
 ) {
     JetchatTheme {
         Column(modifier = Modifier.fillMaxWidth()) {
-            val a = viewModel.channels.firstStateRecord
+            TopAppBar(title = {
+                Text(text = "Eric TV")
+            })
             for (item in viewModel.channels) {
                 Row(modifier = Modifier
                     .clickable { onItemClick(item) }
