@@ -19,3 +19,4 @@ http://androier.com/android-recyclerview-problem-with-api-28-android-pie-9-0/
 [Android Full screen guide](https://developer.android.com/training/system-ui/immersive)
 
 [Coil and compose ref](https://coil-kt.github.io/coil/compose/)
+[Video view with compose](https://morioh.com/p/34353b779b3b)
