@@ -9,6 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ericdream.erictv.data.repo.LiveChannelRepo
+import com.ericdream.erictv.theme.JetchatTheme
 import com.ericdream.erictv.ui.PlayVideoAct
 import com.ericdream.erictv.ui.home.ChannelScreen
 import com.ericdream.erictv.ui.home.MainViewModel
@@ -27,7 +28,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            App()
+            JetchatTheme {
+                App()
+            }
         }
 
 
