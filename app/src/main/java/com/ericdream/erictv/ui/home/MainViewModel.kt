@@ -32,6 +32,10 @@ class MainViewModel() : ViewModel(), OnChannelSelectListener, KoinComponent {
     var channels = mutableStateListOf<LiveChannel>()
         private set
 
+    init {
+        loadChannel()
+    }
+
     fun loadChannel() {
         text.postValue("Hellow X!")
         channels.clear()

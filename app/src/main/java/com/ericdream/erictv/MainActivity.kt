@@ -19,10 +19,6 @@ import kotlin.reflect.KClass
 
 class MainActivity : ComponentActivity() {
 
-
-//    private lateinit var viewDataBinding: ActivityMainBinding
-
-    //    private lateinit var adapter: ChannelAdapter
     private val repo: LiveChannelRepo by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +28,6 @@ class MainActivity : ComponentActivity() {
                 App()
             }
         }
-
-
     }
 
     @Preview
@@ -41,7 +35,6 @@ class MainActivity : ComponentActivity() {
     fun App(
         vm: MainViewModel = viewModel()
     ) {
-        vm.loadChannel()
         ChannelScreen(viewModel = vm, onItemClick = {
             Timber.d("click item icon")
             val bundle = Bundle()
@@ -49,16 +42,6 @@ class MainActivity : ComponentActivity() {
             if (it.link != null) {
                 val uri = it.link!!.toUri()
                 bundle.putParcelable(C.Key.URI, uri)
-            } else {
-//                val result = repo.getLink(it.key)
-//                if (result.error) {
-//                    Timber.e(result.exception)
-//                } else {
-//                    val link = result.link!!
-//                    Timber.d(link)
-//                    uri = link.toUri()
-//                    bundle.putParcelable(C.Key.URI, uri)
-//                }
             }
             goToNextClass(PlayVideoAct::class to bundle)
         })
