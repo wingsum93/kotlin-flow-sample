@@ -7,23 +7,17 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.net.toUri
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.ericdream.erictv.data.repo.LiveChannelRepo
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ericdream.erictv.theme.JetchatTheme
 import com.ericdream.erictv.ui.PlayVideoAct
 import com.ericdream.erictv.ui.home.ChannelScreen
 import com.ericdream.erictv.ui.home.MainViewModel
-import org.koin.android.ext.android.inject
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import kotlin.reflect.KClass
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-
-//    private lateinit var viewDataBinding: ActivityMainBinding
-
-    //    private lateinit var adapter: ChannelAdapter
-    private val repo: LiveChannelRepo by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,16 +26,13 @@ class MainActivity : ComponentActivity() {
                 App()
             }
         }
-
-
     }
 
     @Preview
     @Composable
     fun App(
-        vm: MainViewModel = viewModel()
+        vm: MainViewModel = hiltViewModel()
     ) {
-        vm.loadChannel()
         ChannelScreen(viewModel = vm, onItemClick = {
             Timber.d("click item icon")
             val bundle = Bundle()
@@ -49,16 +40,6 @@ class MainActivity : ComponentActivity() {
             if (it.link != null) {
                 val uri = it.link!!.toUri()
                 bundle.putParcelable(C.Key.URI, uri)
-            } else {
-//                val result = repo.getLink(it.key)
-//                if (result.error) {
-//                    Timber.e(result.exception)
-//                } else {
-//                    val link = result.link!!
-//                    Timber.d(link)
-//                    uri = link.toUri()
-//                    bundle.putParcelable(C.Key.URI, uri)
-//                }
             }
             goToNextClass(PlayVideoAct::class to bundle)
         })

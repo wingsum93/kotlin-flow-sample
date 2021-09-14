@@ -1,9 +1,6 @@
 package com.ericdream.erictv
 
-import com.ericdream.erictv.data.repo.LiveChannelRepo
-import com.ericdream.erictv.data.repo.LiveLinkGenerater
 import com.ericdream.erictv.data.repo.UserRepository
-import com.ericdream.erictv.ui.home.MainViewModel
 import com.ericdream.erictv.ui.playvideo.VideoViewModel
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
@@ -16,13 +13,13 @@ import org.koin.dsl.module
 
 val appModule = module {
     // View models
-    viewModel { MainViewModel() }
+//    viewModel { MainViewModel() }
 
     viewModel { VideoViewModel(get(), get()) }
 
 
-    single { LiveLinkGenerater() }
-    single { LiveChannelRepo(get()) }
+//    single { LiveLinkGeneratorImpl() }
+//    single { LiveChannelRepoImpl(get()) }
     single { UserRepository(get()) }
     //other
     single<DataSource.Factory> { DefaultDataSourceFactory(androidContext(), "eric-tv") }

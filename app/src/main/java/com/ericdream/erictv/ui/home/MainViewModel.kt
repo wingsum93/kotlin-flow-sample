@@ -9,30 +9,33 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ericdream.erictv.C
 import com.ericdream.erictv.data.model.LiveChannel
-import com.ericdream.erictv.data.repo.LiveChannelRepo
+import com.ericdream.erictv.data.repo.LiveChannelRepoImpl
 import com.ericdream.erictv.ui.PlayVideoAct
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
-import org.koin.core.inject
 import timber.log.Timber
+import javax.inject.Inject
 import kotlin.reflect.KClass
 
-class MainViewModel() : ViewModel(), OnChannelSelectListener, KoinComponent {
+@HiltViewModel
+class MainViewModel @Inject constructor(private val repo: LiveChannelRepoImpl) : ViewModel(),
+    OnChannelSelectListener, KoinComponent {
 
     val text: MutableLiveData<String> = MutableLiveData<String>()
 
     val targetClass = MutableLiveData<Pair<KClass<*>, Bundle?>>()
 
-    //    private val _channels: MutableLiveData<List<LiveChannel>> = MutableLiveData()
-//    val channels: LiveData<List<LiveChannel>> = _channels
-    private val repo: LiveChannelRepo by inject()
-
     var channels = mutableStateListOf<LiveChannel>()
         private set
 
-    fun loadChannel() {
+    init {
+        loadChannel()
+    }
+
+    private fun loadChannel() {
         text.postValue("Hellow X!")
         channels.clear()
         channels.addAll(repo.getLiveChannels())
