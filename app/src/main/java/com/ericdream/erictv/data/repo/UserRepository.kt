@@ -4,8 +4,9 @@ import android.content.Context
 import com.ericdream.erictv.C
 import com.ericdream.erictv.data.model.UserSettingIO
 import com.google.gson.Gson
+import javax.inject.Inject
 
-class UserRepository(c: Context) {
+class UserRepository @Inject constructor(c: Context) {
 
     private val sharedPreferences = c.getSharedPreferences(C.APP_NAME, Context.MODE_PRIVATE)
     private val gson: Gson = Gson()

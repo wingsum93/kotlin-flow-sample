@@ -7,19 +7,17 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.net.toUri
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.ericdream.erictv.data.repo.LiveChannelRepo
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ericdream.erictv.theme.JetchatTheme
 import com.ericdream.erictv.ui.PlayVideoAct
 import com.ericdream.erictv.ui.home.ChannelScreen
 import com.ericdream.erictv.ui.home.MainViewModel
-import org.koin.android.ext.android.inject
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import kotlin.reflect.KClass
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-    private val repo: LiveChannelRepo by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +31,7 @@ class MainActivity : ComponentActivity() {
     @Preview
     @Composable
     fun App(
-        vm: MainViewModel = viewModel()
+        vm: MainViewModel = hiltViewModel()
     ) {
         ChannelScreen(viewModel = vm, onItemClick = {
             Timber.d("click item icon")
