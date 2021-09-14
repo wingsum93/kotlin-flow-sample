@@ -3,12 +3,7 @@ package com.ericdream.erictv.ui.playvideo
 import android.app.Application
 import android.net.Uri
 import android.view.View
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ProcessLifecycleOwner
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.*
 import com.ericdream.erictv.R
 import com.ericdream.erictv.data.repo.UserRepository
 import com.ericdream.erictv.util.PlaybackStateDecoder
@@ -33,11 +28,13 @@ import com.google.gson.Gson
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * A Live video view model
  */
-class VideoViewModel(app: Application, val userRepository: UserRepository) : AndroidViewModel(app),
+class VideoViewModel @Inject constructor(app: Application, val userRepository: UserRepository) :
+    AndroidViewModel(app),
     Player.EventListener,
     LifecycleObserver,
     AudioListener, KoinComponent {
