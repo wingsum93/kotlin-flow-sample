@@ -8,16 +8,20 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.ericdream.erictv.data.model.LiveChannel
+import kotlinx.coroutines.launch
 
+@ExperimentalCoilApi
 @Composable
 fun ChannelScreen(
     viewModel: MainViewModel,
-    onItemClick: (LiveChannel) -> Unit
+    onItemClick: suspend (LiveChannel) -> Unit
 ) {
     Scaffold(topBar = {
         TopAppBar(
@@ -31,10 +35,15 @@ fun ChannelScreen(
         val items = remember {
             viewModel.channels
         }
+        val scope = rememberCoroutineScope()
         Column(modifier = Modifier.fillMaxWidth()) {
             for (item in items) {
                 Row(modifier = Modifier
-                    .clickable { onItemClick(item) }
+                    .clickable {
+                        scope.launch {
+                            onItemClick(item)
+                        }
+                    }
                     .fillMaxWidth()) {
                     Image(
                         painter = rememberImagePainter(item.iconLink),
