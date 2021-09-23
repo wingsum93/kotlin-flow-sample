@@ -48,7 +48,7 @@ class PlayVideoAct : AppCompatActivity() {
         exoplayView.player = viewModel.player
 
         viewModel.videoPlay.observe(this, Observer { playState ->
-            Timber.d("aaa")
+            Timber.d("playState change")
         })
 
         // Start video

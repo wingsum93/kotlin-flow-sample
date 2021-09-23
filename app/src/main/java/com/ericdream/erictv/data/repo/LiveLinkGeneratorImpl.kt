@@ -4,12 +4,10 @@ import com.ericdream.erictv.data.api.NowApi
 import com.ericdream.erictv.data.model.ChannelResult
 import com.ericdream.erictv.data.model.NowIO
 import com.ericdream.erictv.data.model.ViuTvIO
-import com.ericdream.erictv.http.RetrofitManager
 import javax.inject.Inject
 
-class LiveLinkGeneratorImpl @Inject constructor() : LiveLinkGenerator {
+class LiveLinkGeneratorImpl @Inject constructor(val nowApi: NowApi) : LiveLinkGenerator {
 
-    val nowApi = RetrofitManager.create<NowApi>()
 
     override suspend fun getNow331Link(): ChannelResult {
         val io = NowIO()

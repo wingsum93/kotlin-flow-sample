@@ -2,11 +2,11 @@ package com.ericdream.erictv
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ericdream.erictv.theme.JetchatTheme
 import com.ericdream.erictv.ui.PlayVideoAct
@@ -36,11 +36,11 @@ class MainActivity : ComponentActivity() {
         ChannelScreen(viewModel = vm, onItemClick = {
             Timber.d("click item icon")
             val bundle = Bundle()
+            val uri = vm.getChannelLink(it)
+            Log.i("erictest", "uri $uri")
+            it.link = uri.toString()
             bundle.putSerializable(C.Key.LIVECHANNEL, it)
-            if (it.link != null) {
-                val uri = it.link!!.toUri()
-                bundle.putParcelable(C.Key.URI, uri)
-            }
+            bundle.putParcelable(C.Key.URI, uri)
             goToNextClass(PlayVideoAct::class to bundle)
         })
     }
