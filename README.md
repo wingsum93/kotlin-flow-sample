@@ -21,3 +21,5 @@ http://androier.com/android-recyclerview-problem-with-api-28-android-pie-9-0/
 [Coil and compose ref](https://coil-kt.github.io/coil/compose/)
 [Video view with compose](https://morioh.com/p/34353b779b3b)
 [Hilt lib](https://developer.android.com/training/dependency-injection/hilt-android)
+
+[scaffold + navhost](https://stackoverflow.com/questions/68578832/jetpack-compose-navigation-scaffold-navhost-not-working)
