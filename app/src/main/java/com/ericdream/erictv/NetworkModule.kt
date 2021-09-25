@@ -1,10 +1,13 @@
 package com.ericdream.erictv
 
+import android.content.Context
 import com.ericdream.erictv.data.api.NowApi
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -36,5 +39,11 @@ object NetworkModule {
     @Singleton
     fun provideNowApi(retrofit: Retrofit): NowApi {
         return retrofit.create()
+    }
+
+    @Provides
+    @Singleton
+    fun getDataSourceFactory(@ApplicationContext context: Context): com.google.android.exoplayer2.upstream.DataSource.Factory {
+        return DefaultDataSourceFactory(context, "eric-tv")
     }
 }

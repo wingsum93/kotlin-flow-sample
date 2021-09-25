@@ -2,7 +2,9 @@ package com.ericdream.erictv.ui.home
 
 import android.net.Uri
 import android.os.Bundle
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +13,7 @@ import com.ericdream.erictv.data.model.LiveChannel
 import com.ericdream.erictv.data.repo.LiveChannelRepoImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import timber.log.Timber
 import javax.inject.Inject
@@ -26,6 +29,11 @@ class MainViewModel @Inject constructor(private val repo: LiveChannelRepoImpl) :
 
     var channels = mutableStateListOf<LiveChannel>()
         private set
+
+    private val _liveLink = mutableStateOf("")
+    val liveLink: State<String> = _liveLink
+    private val _pageTitle = mutableStateOf("Eric TV")
+    val pageTitle: State<String> = _pageTitle
 
     init {
         loadChannel()
@@ -53,6 +61,27 @@ class MainViewModel @Inject constructor(private val repo: LiveChannelRepoImpl) :
             }
         }
         return uri
+    }
+
+    fun loadChannelLinkById(id: String) {
+        viewModelScope.launch {
+            // check link if exist?
+            val targetChannel = channels.find { it.key == id }
+            if (targetChannel != null) {
+                // set title
+                _pageTitle.value = targetChannel.name
+                if (targetChannel.link == null) {
+                    val a = repo.getLink(id)
+                    if (a.error) {
+                        _liveLink.value = ""
+                    } else {
+                        _liveLink.value = a.link!!
+                    }
+                } else {
+                    _liveLink.value = targetChannel.link!!
+                }
+            }
+        }
     }
 
 

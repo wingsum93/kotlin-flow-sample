@@ -1,32 +1,34 @@
+@file:JvmName("MainAppKt")
+
 package com.ericdream.erictv.ui.home
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
-import com.ericdream.erictv.data.model.LiveChannel
 
 @ExperimentalCoilApi
 @Composable
-fun ChannelScreen(
+fun MainApp(
+    navigationController: NavController,
     viewModel: MainViewModel,
-    onItemClick: suspend (LiveChannel) -> Unit
+    content: @Composable (PaddingValues) -> Unit,
 ) {
+    val title = remember {
+        viewModel.pageTitle
+    }
     Scaffold(topBar = {
         TopAppBar(
             title = {
                 Row {
-                    Text(text = "Eric TV")
+                    Text(text = title.value)
                 }
             }
         )
-    }) {
-        val items = remember {
-            viewModel.channels
-        }
-        ChannelList(items = items, onItemClick = onItemClick)
-    }
+    }, content = content)
 }
