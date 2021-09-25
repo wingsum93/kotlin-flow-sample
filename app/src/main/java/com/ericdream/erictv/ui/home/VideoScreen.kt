@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,13 +33,13 @@ fun VideoScreen(link: String) {
     }
     // Do not recreate the player everytime this Composable commits
     val exoPlayer = remember {
-        SimpleExoPlayer.Builder(context).build().apply {
-            val source = dataSourceFactory.buildMediaSource(Uri.parse(link), null)
-            this.setMediaSource(source)
-            this.prepare()
-        }
+        SimpleExoPlayer.Builder(context).build()
     }
-
+    LaunchedEffect(key1 = link) {
+        val source = dataSourceFactory.buildMediaSource(Uri.parse(link), null)
+        exoPlayer.setMediaSource(source)
+        exoPlayer.prepare()
+    }
     // Gateway to legacy Android Views through XML inflation.
     AndroidView({
         PlayerView(it).apply {
