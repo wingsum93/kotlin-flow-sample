@@ -2,7 +2,7 @@ package com.ericdream.erictv.ui.home
 
 import android.net.Uri
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
@@ -48,7 +48,7 @@ fun VideoScreen(link: String) {
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
         }
-    }, modifier = Modifier.fillMaxWidth())
+    }, modifier = Modifier.fillMaxHeight(0.5f))
 
     DisposableEffect(key1 = true) {
         exoPlayer.playWhenReady = true

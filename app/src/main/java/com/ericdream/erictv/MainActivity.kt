@@ -2,7 +2,6 @@ package com.ericdream.erictv
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
@@ -20,7 +19,6 @@ import com.ericdream.erictv.ui.home.MainApp
 import com.ericdream.erictv.ui.home.MainViewModel
 import com.ericdream.erictv.ui.home.VideoScreen
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import kotlin.reflect.KClass
 
 @AndroidEntryPoint
@@ -51,26 +49,21 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier.padding(innerPadding)
             ) {
                 composable("home") {
-                    ChannelList(items = channels, onItemClick = {
-                        Timber.d("click item icon")
-                        val bundle = Bundle()
-                        val uri = vm.getChannelLink(it)
-                        Log.i("erictest", "uri $uri")
-                        Log.i("erictest", "key ${it.key}")
-                        it.link = uri.toString()
-                        bundle.putSerializable(C.Key.LIVECHANNEL, it)
-                        bundle.putParcelable(C.Key.URI, uri)
-                        val a = it.key
-                        navController.navigate("live/${it.key}")
-                    })
+                    vm.resetToHomePageTitle()
+                    ChannelList(items = channels, navController = navController)
                 }
                 composable("live/{channelId}") { backStackEntry ->
-                    val channelId = backStackEntry.arguments?.getString("channelId") ?: ""
-                    vm.loadChannelLinkById(channelId)
-                    val link = remember {
-                        vm.liveLink.value
+                    val channelId = remember {
+                        backStackEntry.arguments?.getString("channelId") ?: ""
                     }
-                    VideoScreen(link)
+                    remember {
+                        vm.loadChannelLinkById(channelId)
+                        true
+                    }
+                    val link = remember {
+                        vm.liveLink
+                    }
+                    VideoScreen(link.value)
                 }
             }
         }

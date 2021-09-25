@@ -9,6 +9,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.ericdream.erictv.data.model.LiveChannel
 import kotlinx.coroutines.launch
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ChannelList(
     items: List<LiveChannel>,
-    onItemClick: suspend (LiveChannel) -> Unit
+    navController: NavController
 ) {
     val scope = rememberCoroutineScope()
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -24,7 +25,7 @@ fun ChannelList(
             Row(modifier = Modifier
                 .clickable {
                     scope.launch {
-                        onItemClick(item)
+                        navController.navigate("live/${item.key}")
                     }
                 }
                 .fillMaxWidth()) {
