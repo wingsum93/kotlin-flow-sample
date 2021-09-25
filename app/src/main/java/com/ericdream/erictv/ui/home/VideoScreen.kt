@@ -2,7 +2,6 @@ package com.ericdream.erictv.ui.home
 
 import android.net.Uri
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -17,7 +16,7 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.source.dash.DashMediaSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource
-import com.google.android.exoplayer2.ui.PlayerView
+import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
@@ -42,14 +41,14 @@ fun VideoScreen(link: String) {
     }
     // Gateway to legacy Android Views through XML inflation.
     AndroidView({
-        PlayerView(it).apply {
+        StyledPlayerView(it).apply {
             player = exoPlayer
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
         }
-    }, modifier = Modifier.fillMaxHeight(0.5f))
+    }, modifier = Modifier)
 
     DisposableEffect(key1 = true) {
         exoPlayer.playWhenReady = true
