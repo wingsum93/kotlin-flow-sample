@@ -16,6 +16,7 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.source.dash.DashMediaSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
@@ -30,9 +31,19 @@ fun VideoScreen(link: String) {
     val dataSourceFactory: DataSource.Factory = remember {
         DefaultDataSourceFactory(context, "eric-tv")
     }
+    val trackSelectorParameter = remember {
+        DefaultTrackSelector.ParametersBuilder(context)
+            .setForceLowestBitrate(true)
+            .build()
+    }
+    val trackSelector = remember {
+        DefaultTrackSelector(context).also { it.parameters = trackSelectorParameter }
+    }
     // Do not recreate the player everytime this Composable commits
     val exoPlayer = remember {
-        SimpleExoPlayer.Builder(context).build()
+        SimpleExoPlayer.Builder(context)
+            .setTrackSelector(trackSelector)
+            .build()
     }
     LaunchedEffect(key1 = link) {
         val source = dataSourceFactory.buildMediaSource(Uri.parse(link), null)
