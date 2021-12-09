@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
                     val link = remember {
                         vm.liveLink
                     }
-                    VideoScreen(link.value)
+                    val mediaPlayback = VideoScreen(link.value)
                 }
             }
         }
