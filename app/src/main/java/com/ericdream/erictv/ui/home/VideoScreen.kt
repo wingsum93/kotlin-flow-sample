@@ -31,16 +31,16 @@ fun VideoScreen(link: String) {
     val dataSourceFactory: DataSource.Factory = remember {
         DefaultDataSourceFactory(context, "eric-tv")
     }
-    val trackSelectorParameter = remember {
+    val trackSelectorParameter = remember(context) {
         DefaultTrackSelector.ParametersBuilder(context)
             .setForceLowestBitrate(true)
             .build()
     }
-    val trackSelector = remember {
+    val trackSelector = remember(context) {
         DefaultTrackSelector(context).also { it.parameters = trackSelectorParameter }
     }
     // Do not recreate the player everytime this Composable commits
-    val exoPlayer = remember {
+    val exoPlayer = remember(context) {
         SimpleExoPlayer.Builder(context)
             .setTrackSelector(trackSelector)
             .build()
