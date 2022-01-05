@@ -192,11 +192,15 @@ fun VideoScreen(
         val handler = CoroutineExceptionHandler { _, exception ->
             Timber.e("CoroutineExceptionHandler got $exception")
         }
-        LaunchedEffect(key1 = showController, key2 = latestInteractionTimeMill) {
-            scope.launch(handler) {
+        produceState(initialValue = showController, key1 = latestInteractionTimeMill) {
+            val job = scope.launch(handler) {
                 Timber.i("LaunchedEffect is called xz")
-                delay(5000L)
+                delay(3000L)
+                this@produceState.value = false
                 showController = false
+            }
+            awaitDispose {
+                job.cancel()
             }
         }
     }
