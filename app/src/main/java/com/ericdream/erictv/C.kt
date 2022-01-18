@@ -6,9 +6,9 @@ object C {
     const val KEY_USER_SETTING: String = "KEY_USER_SETTING"
     const val SAMPLE_HLS_LINK = "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8"
     const val RTHK_31_LINK =
-        "https://rthklive1-lh.akamaihd.net/i/rthk31_1@167495/index_2052_av-b.m3u8"
+        "https://www.rthk.hk/feeds/dtt/rthktv31_https.m3u8?v=20200211"
     const val RTHK_32_LINK =
-        "https://rthklive2-lh.akamaihd.net/i/rthk32_1@168450/index_162_av-p.m3u8"
+        "https://www.rthk.hk/feeds/dtt/rthktv32_https.m3u8?v=20200211"
     const val OPENTV_LINK = "http://media.fantv.hk/m3u8/archive/channel2_stream1.m3u8"
     const val VIUTV_ICON_LINK =
         "https://yt3.ggpht.com/a/AGF-l7_fMTospARmgQ60hAyJIYqKer7799fcfgDt=s288-c-k-c0xffffffff-no-rj-mo"
