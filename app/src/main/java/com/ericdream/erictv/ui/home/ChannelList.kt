@@ -34,7 +34,7 @@ fun ChannelList(
                 },
                 modifier = Modifier
                     .padding(horizontal = 30.dp, vertical = 10.dp)
-                    .fillMaxWidth(),
+                    .widthIn(min = 50.dp, max = 250.dp),
                 shape = RoundedCornerShape(50.dp),
                 border = BorderStroke(
                     2.dp,
