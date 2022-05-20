@@ -39,6 +39,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion '1.1.0-rc01'
     }
+    namespace 'com.ericdream.erictv'
 }
 ext {
     koin_version = '2.0.1'

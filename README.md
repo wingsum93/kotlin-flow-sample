@@ -1,4 +1,4 @@
-# Eric TV
+# Kotlin Flow Sample for Eric TV
 
 
 ## Library links
