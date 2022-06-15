@@ -1,14 +1,17 @@
 package com.ericdream.erictv.ui.home
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.ericdream.erictv.data.model.LiveChannel
 import com.ericdream.erictv.data.repo.LiveChannelRepoImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
@@ -37,6 +40,7 @@ class MainViewModel @Inject constructor(private val repo: LiveChannelRepoImpl) :
         text.postValue("Hello X!")
         channels.clear()
         channels.addAll(repo.getLiveChannels())
+        repo.getLiveChannels().collectAsState(initial = liveLink)
     }
 
     fun loadChannelLinkById(id: String) {

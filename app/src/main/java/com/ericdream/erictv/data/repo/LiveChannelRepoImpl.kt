@@ -3,6 +3,8 @@ package com.ericdream.erictv.data.repo
 import com.ericdream.erictv.C
 import com.ericdream.erictv.data.model.ChannelResult
 import com.ericdream.erictv.data.model.LiveChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class LiveChannelRepoImpl @Inject constructor(private val generator: LiveLinkGenerator) :
@@ -56,16 +58,16 @@ class LiveChannelRepoImpl @Inject constructor(private val generator: LiveLinkGen
         }
     }
 
-    override fun getLiveChannels(): List<LiveChannel> {
-        return livechannels.toList()
+    override fun getLiveChannels(): Flow<List<LiveChannel>> {
+        return flowOf(livechannels.toList())
     }
 
-    override suspend fun getLink(key: String): ChannelResult {
+    override suspend fun getLink(key: String): Flow<ChannelResult> {
         return when (key) {
             "331" -> generator.getNow331Link()
             "332" -> generator.getNow332Link()
             "viutv" -> generator.getViuTVLink()
-            else -> ChannelResult.create(IllegalArgumentException())
+            else -> flowOf(ChannelResult.create(IllegalArgumentException()))
         }
     }
 }
