@@ -3,6 +3,8 @@ package com.ericdream.erictv.data.repo
 import com.ericdream.erictv.C
 import com.ericdream.erictv.data.model.ChannelResult
 import com.ericdream.erictv.data.model.LiveChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class LiveChannelRepoImpl @Inject constructor(private val generator: LiveLinkGenerator) :
@@ -11,7 +13,6 @@ class LiveChannelRepoImpl @Inject constructor(private val generator: LiveLinkGen
     private val livechannels = mutableListOf<LiveChannel>()
 
     init {
-
         livechannels += LiveChannel.liveChannel {
             name = "Open TV"
             iconLink = C.Icon.OPENTV
@@ -33,13 +34,11 @@ class LiveChannelRepoImpl @Inject constructor(private val generator: LiveLinkGen
         livechannels += LiveChannel.liveChannel {
             name = "ViuTv"
             iconLink = C.Icon.VIUTV
-
             key = "viutv"
         }
         livechannels += LiveChannel.liveChannel {
             name = "Now 331"
             iconLink = C.Icon.NOWTV
-
             key = "331"
         }
         livechannels += LiveChannel.liveChannel {
@@ -56,8 +55,15 @@ class LiveChannelRepoImpl @Inject constructor(private val generator: LiveLinkGen
         }
     }
 
-    override fun getLiveChannels(): List<LiveChannel> {
-        return livechannels.toList()
+    override fun getLiveChannels(): Flow<List<LiveChannel>> = flow {
+        for (i in livechannels) {
+            if (i.link == null) {
+                val result = getLink(i.key)
+                if (result.link != null)
+                    i.link = result.link
+            }
+        }
+        emit(livechannels.toList())
     }
 
     override suspend fun getLink(key: String): ChannelResult {

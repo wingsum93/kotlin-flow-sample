@@ -1,7 +1,6 @@
 package com.ericdream.erictv.ui.home
 
 import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +9,7 @@ import com.ericdream.erictv.data.model.LiveChannel
 import com.ericdream.erictv.data.repo.LiveChannelRepoImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import javax.inject.Inject
@@ -20,23 +20,16 @@ class MainViewModel @Inject constructor(private val repo: LiveChannelRepoImpl) :
 
     val text: MutableLiveData<String> = MutableLiveData<String>()
 
-    var channels = mutableStateListOf<LiveChannel>()
-        private set
+    private var channels = emptyList<LiveChannel>()
 
-    private val _liveLink =
-        mutableStateOf("https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4")
-    val liveLink: State<String> = _liveLink
-    private val _pageTitle = mutableStateOf("Eric TV")
+    private val _pageTitle = mutableStateOf("...")
     val pageTitle: State<String> = _pageTitle
+    val channelList = repo.getLiveChannels()
 
     init {
-        loadChannel()
-    }
-
-    private fun loadChannel() {
-        text.postValue("Hello X!")
-        channels.clear()
-        channels.addAll(repo.getLiveChannels())
+        viewModelScope.launch {
+            channelList.collectLatest { channels = it }
+        }
     }
 
     fun loadChannelLinkById(id: String) {
@@ -46,16 +39,6 @@ class MainViewModel @Inject constructor(private val repo: LiveChannelRepoImpl) :
             if (targetChannel != null) {
                 // set title
                 _pageTitle.value = targetChannel.name
-                if (targetChannel.link == null) {
-                    val searchResult = repo.getLink(id)
-                    if (searchResult.error) {
-                        _liveLink.value = ""
-                    } else {
-                        _liveLink.value = searchResult.link!!
-                    }
-                } else {
-                    _liveLink.value = targetChannel.link!!
-                }
             }
         }
     }
@@ -66,6 +49,6 @@ class MainViewModel @Inject constructor(private val repo: LiveChannelRepoImpl) :
     }
 
     fun resetToHomePageTitle() {
-        _pageTitle.value = "Eric TV"
+        _pageTitle.value = "Eric TV Flow"
     }
 }
