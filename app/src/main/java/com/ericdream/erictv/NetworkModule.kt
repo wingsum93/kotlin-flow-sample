@@ -44,6 +44,6 @@ object NetworkModule {
     @Provides
     @Singleton
     fun getDataSourceFactory(@ApplicationContext context: Context): com.google.android.exoplayer2.upstream.DataSource.Factory {
-        return DefaultDataSourceFactory(context, "eric-tv")
+        return DefaultDataSourceFactory(context, "intern")
     }
 }

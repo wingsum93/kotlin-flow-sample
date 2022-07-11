@@ -59,7 +59,7 @@ fun VideoScreen(
     val scope = rememberCoroutineScope()
     Timber.i("link: $link")
     val dataSourceFactory: DataSource.Factory = remember {
-        DefaultDataSourceFactory(context, "eric-tv")
+        DefaultDataSourceFactory(context, "intern")
     }
     val trackSelectorParameter = remember(context) {
         DefaultTrackSelector.ParametersBuilder(context)

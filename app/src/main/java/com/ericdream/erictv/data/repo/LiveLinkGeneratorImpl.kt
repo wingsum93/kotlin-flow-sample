@@ -1,20 +1,19 @@
 package com.ericdream.erictv.data.repo
 
+import android.util.Log
 import com.ericdream.erictv.data.api.NowApi
 import com.ericdream.erictv.data.model.ChannelResult
-import com.ericdream.erictv.data.model.NowIO
 import com.ericdream.erictv.data.model.ViuTvIO
 import javax.inject.Inject
 
 class LiveLinkGeneratorImpl @Inject constructor(private val nowApi: NowApi) : LiveLinkGenerator {
-
+    val TAG = "eric1999"
 
     override suspend fun getNow331Link(): ChannelResult {
-        val io = NowIO()
-        io.channelno = "331"
         return try {
-            val bo = nowApi.getNowTV(io)
+            val bo = nowApi.getNowTV(channelno = "331")
             val link = bo.asset.hls.adaptive[0]
+            Log.d(TAG, "getNow331Link: $link")
             ChannelResult.create(link)
         } catch (e: Exception) {
             ChannelResult.create(e)
@@ -22,11 +21,10 @@ class LiveLinkGeneratorImpl @Inject constructor(private val nowApi: NowApi) : Li
     }
 
     override suspend fun getNow332Link(): ChannelResult {
-        val io = NowIO()
-        io.channelno = "332"
         return try {
-            val bo = nowApi.getNowTV(io)
+            val bo = nowApi.getNowTV(channelno = "332")
             val link = bo.asset.hls.adaptive[0]
+            Log.d(TAG, "getNow332Link: $link")
             ChannelResult.create(link)
         } catch (e: Exception) {
             ChannelResult.create(e)
