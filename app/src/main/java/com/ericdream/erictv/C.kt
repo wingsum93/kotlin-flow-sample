@@ -19,17 +19,17 @@ object C {
 
     object Icon {
         const val VIUTV =
-            "https://i.ibb.co/jT88Vyw/viutv-icon.png"
+            "https://gt-test-zz.s3.ap-northeast-1.amazonaws.com/icon/viutv.png"
         const val NOWTV =
-            "https://i.ibb.co/PzfwBwv/nowtv.jpg"
+            "https://gt-test-zz.s3.ap-northeast-1.amazonaws.com/icon/now400.png"
         const val OPENTV =
-            "https://i.ibb.co/Rj3Zd7G/opentv.png"
+            "https://gt-test-zz.s3.ap-northeast-1.amazonaws.com/icon/opentv.jpg"
         const val CABLETV =
-            "https://i.ibb.co/tmCGZND/icable-1-300x300.png"
+            "https://gt-test-zz.s3.ap-northeast-1.amazonaws.com/icon/cable+tv.png"
         const val RTHK1 =
-            "https://i.ibb.co/3snzqxN/rthktv-live.jpg"
+            "https://gt-test-zz.s3.ap-northeast-1.amazonaws.com/icon/rthk.png"
         const val RTHK2 =
-            "https://i.ibb.co/z2t4J3G/rthk32.png"
+            "https://gt-test-zz.s3.ap-northeast-1.amazonaws.com/icon/rthk.png"
     }
 
     object Data {

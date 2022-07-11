@@ -4,47 +4,45 @@ import com.ericdream.erictv.data.api.NowApi
 import com.ericdream.erictv.data.model.ChannelResult
 import com.ericdream.erictv.data.model.NowIO
 import com.ericdream.erictv.data.model.ViuTvIO
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class LiveLinkGeneratorImpl @Inject constructor(val nowApi: NowApi) : LiveLinkGenerator {
+class LiveLinkGeneratorImpl @Inject constructor(private val nowApi: NowApi) : LiveLinkGenerator {
 
 
-    override suspend fun getNow331Link(): Flow<ChannelResult> = flow {
+    override suspend fun getNow331Link(): ChannelResult {
         val io = NowIO()
         io.channelno = "331"
-        try {
+        return try {
             val bo = nowApi.getNowTV(io)
             val link = bo.asset.hls.adaptive[0]
-            emit(ChannelResult.create(link))
+            ChannelResult.create(link)
         } catch (e: Exception) {
-            emit(ChannelResult.create(e))
+            ChannelResult.create(e)
         }
     }
 
-    override suspend fun getNow332Link(): Flow<ChannelResult> = flow {
+    override suspend fun getNow332Link(): ChannelResult {
         val io = NowIO()
         io.channelno = "332"
-        try {
+        return try {
             val bo = nowApi.getNowTV(io)
             val link = bo.asset.hls.adaptive[0]
-            emit(ChannelResult.create(link))
+            ChannelResult.create(link)
         } catch (e: Exception) {
-            emit(ChannelResult.create(e))
+            ChannelResult.create(e)
         }
     }
 
-    override suspend fun getViuTVLink(): Flow<ChannelResult> = flow {
+    override suspend fun getViuTVLink(): ChannelResult {
         val io = ViuTvIO()
         io.channelno = "099"
         io.deviceId = "99999999"
-        try {
+        return try {
             val bo = nowApi.getViuTV(io)
             val link = bo.asset.hls.adaptive[0]
-            emit(ChannelResult.create(link))
+            ChannelResult.create(link)
         } catch (e: Exception) {
-            emit(ChannelResult.create(e))
+            ChannelResult.create(e)
         }
     }
 }

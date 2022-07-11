@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface LiveChannelRepo {
     fun getLiveChannels(): Flow<List<LiveChannel>>
-    suspend fun getLink(key: String): Flow<ChannelResult>
+    suspend fun getLink(key: String): ChannelResult
 }

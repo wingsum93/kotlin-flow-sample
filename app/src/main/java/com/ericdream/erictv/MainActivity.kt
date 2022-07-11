@@ -1,12 +1,12 @@
 package com.ericdream.erictv
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -21,7 +21,6 @@ import com.ericdream.erictv.ui.home.MainApp
 import com.ericdream.erictv.ui.home.MainViewModel
 import com.ericdream.erictv.ui.home.VideoScreen
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.reflect.KClass
 
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
@@ -43,9 +42,7 @@ class MainActivity : ComponentActivity() {
     fun App(
         vm: MainViewModel = hiltViewModel()
     ) {
-        val channels = remember {
-            vm.channels
-        }
+        val channels = vm.channelList.collectAsState(initial = emptyList()).value
         val navController = rememberNavController()
         MainApp(navigationController = navController, vm) { innerPadding ->
             NavHost(
@@ -61,23 +58,15 @@ class MainActivity : ComponentActivity() {
                     val channelId = remember {
                         backStackEntry.arguments?.getString("channelId") ?: ""
                     }
-                    remember {
-                        vm.loadChannelLinkById(channelId)
-                        true
+                    val channel = remember {
+                        channels.find { it.key == channelId }
                     }
-                    val link = remember {
-                        vm.liveLink
+                    remember(channel) {
+                        vm.loadChannelLinkById(channel?.key ?: "")
                     }
-                    val mediaPlayback = VideoScreen(link.value)
+                    val mediaPlayback = VideoScreen(channel?.link ?: "")
                 }
             }
         }
     }
-
-    private fun goToNextClass(pair: Pair<KClass<*>, Bundle?>) {
-        val intent = Intent(this, pair.first.java)
-        pair.second?.let { intent.putExtras(it) }
-        startActivity(intent)
-    }
-
 }
