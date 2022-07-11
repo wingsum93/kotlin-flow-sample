@@ -22,12 +22,8 @@ class MainViewModel @Inject constructor(private val repo: LiveChannelRepoImpl) :
 
     private var channels = emptyList<LiveChannel>()
 
-    private val _liveLink =
-        mutableStateOf("https://www.rmp-streaming.com/media/big-buck-bunny-360p.mp4")
-
-    private val _pageTitle = mutableStateOf("Eric TV")
+    private val _pageTitle = mutableStateOf("...")
     val pageTitle: State<String> = _pageTitle
-
     val channelList = repo.getLiveChannels()
 
     init {
