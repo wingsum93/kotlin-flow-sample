@@ -15,10 +15,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ericdream.erictv.theme.JetchatTheme
-import com.ericdream.erictv.ui.home.ChannelList
+import com.ericdream.erictv.ui.home.ChannelListUI
 import com.ericdream.erictv.ui.home.MainApp
 import com.ericdream.erictv.ui.home.MainViewModel
-import com.ericdream.erictv.ui.playvideo.VideoScreen
+import com.ericdream.erictv.ui.video.VideoScreen
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.compose.foundation.layout.padding
 
@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
             ) {
                 composable("home") {
                     vm.resetToHomePageTitle()
-                    ChannelList(items = channels, navController = navController)
+                    ChannelListUI(items = channels, navController = navController)
                 }
                 composable("live/{channelId}") { backStackEntry ->
                     val channelId = remember {

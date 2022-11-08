@@ -3,7 +3,7 @@ package com.ericdream.erictv.data.repo
 import android.util.Log
 import com.ericdream.erictv.data.api.NowApi
 import com.ericdream.erictv.data.model.ChannelResult
-import com.ericdream.erictv.data.model.ViuTvRequest
+import com.ericdream.erictv.data.model.network.ViuTvRequest
 import com.ericdream.erictv.data.repo.interfaces.LiveLinkGenerator
 import javax.inject.Inject
 

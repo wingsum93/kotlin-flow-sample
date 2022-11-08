@@ -1,4 +1,4 @@
-package com.ericdream.erictv.ui.playvideo
+package com.ericdream.erictv.ui.video
 
 import android.app.Application
 import android.net.Uri

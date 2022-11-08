@@ -1,11 +1,11 @@
-package com.ericdream.erictv.data.model
+package com.ericdream.erictv.data.model.network
 
 import com.google.gson.annotations.SerializedName
 
 /**
  * for vuitv, now 331, now 332
  */
-class ChannelBO {
+class ChannelResponse {
     @SerializedName("responseCode")
     var responseCode: String = ""
 

@@ -1,7 +1,6 @@
-package com.ericdream.erictv.data.model
+package com.ericdream.erictv.data.model.network
 
-class ViuTvRequest(
-
+data class ViuTvRequest(
     //  ViuTV
     var channelno: String = "099",
     var deviceId: String = "",
