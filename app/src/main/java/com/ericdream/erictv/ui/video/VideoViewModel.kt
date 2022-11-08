@@ -5,7 +5,7 @@ import android.net.Uri
 import android.view.View
 import androidx.lifecycle.*
 import com.ericdream.erictv.R
-import com.ericdream.erictv.data.repo.interfaces.UserRepository
+import com.ericdream.erictv.data.reposittory.interfaces.UserRepository
 import com.ericdream.erictv.utils.PlaybackStateDecoder
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.MediaItem

@@ -1,9 +1,9 @@
 package com.ericdream.erictv.data.module
 
-import com.ericdream.erictv.data.repo.LiveChannelRepositoryImpl
-import com.ericdream.erictv.data.repo.LiveLinkGeneratorImpl
-import com.ericdream.erictv.data.repo.interfaces.LiveChannelRepository
-import com.ericdream.erictv.data.repo.interfaces.LiveLinkGenerator
+import com.ericdream.erictv.data.reposittory.LiveChannelRepositoryImpl
+import com.ericdream.erictv.data.reposittory.LiveLinkGeneratorImpl
+import com.ericdream.erictv.data.reposittory.interfaces.LiveChannelRepository
+import com.ericdream.erictv.data.reposittory.interfaces.LiveLinkGenerator
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

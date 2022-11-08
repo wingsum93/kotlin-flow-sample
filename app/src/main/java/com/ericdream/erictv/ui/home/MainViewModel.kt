@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ericdream.erictv.data.model.LiveChannel
-import com.ericdream.erictv.data.repo.LiveChannelRepositoryImpl
+import com.ericdream.erictv.data.reposittory.LiveChannelRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collectLatest

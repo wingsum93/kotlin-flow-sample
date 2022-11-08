@@ -1,8 +1,8 @@
-package com.ericdream.erictv.data.repo
+package com.ericdream.erictv.data.reposittory
 
 import android.content.Context
 import com.ericdream.erictv.data.model.UserSettingObject
-import com.ericdream.erictv.data.repo.interfaces.UserRepository
+import com.ericdream.erictv.data.reposittory.interfaces.UserRepository
 import com.ericdream.erictv.utils.Constant
 import com.google.gson.Gson
 import javax.inject.Inject
