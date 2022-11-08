@@ -1,4 +1,4 @@
-package com.ericdream.erictv
+package com.ericdream.erictv.data.module
 
 import android.content.Context
 import com.ericdream.erictv.data.api.NowApi

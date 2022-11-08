@@ -1,4 +1,4 @@
-package com.ericdream.erictv.data.repo
+package com.ericdream.erictv.data.reposittory.interfaces
 
 import com.ericdream.erictv.data.model.ChannelResult
 

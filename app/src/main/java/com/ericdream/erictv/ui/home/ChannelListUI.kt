@@ -2,7 +2,6 @@ package com.ericdream.erictv.ui.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -17,9 +16,10 @@ import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.ericdream.erictv.data.model.LiveChannel
 import kotlinx.coroutines.launch
+import androidx.compose.foundation.layout.*
 
 @Composable
-fun ChannelList(
+fun ChannelListUI(
     items: List<LiveChannel>,
     navController: NavController
 ) {

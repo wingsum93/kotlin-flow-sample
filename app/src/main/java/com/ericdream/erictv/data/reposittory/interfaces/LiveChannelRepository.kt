@@ -1,10 +1,10 @@
-package com.ericdream.erictv.data.repo
+package com.ericdream.erictv.data.reposittory.interfaces
 
 import com.ericdream.erictv.data.model.ChannelResult
 import com.ericdream.erictv.data.model.LiveChannel
 import kotlinx.coroutines.flow.Flow
 
-interface LiveChannelRepo {
+interface LiveChannelRepository {
     fun getLiveChannels(): Flow<List<LiveChannel>>
     suspend fun getLink(key: String): ChannelResult
 }

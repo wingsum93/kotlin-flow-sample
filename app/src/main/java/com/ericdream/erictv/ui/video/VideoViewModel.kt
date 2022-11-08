@@ -1,12 +1,12 @@
-package com.ericdream.erictv.ui.playvideo
+package com.ericdream.erictv.ui.video
 
 import android.app.Application
 import android.net.Uri
 import android.view.View
 import androidx.lifecycle.*
 import com.ericdream.erictv.R
-import com.ericdream.erictv.data.repo.UserRepository
-import com.ericdream.erictv.util.PlaybackStateDecoder
+import com.ericdream.erictv.data.reposittory.interfaces.UserRepository
+import com.ericdream.erictv.utils.PlaybackStateDecoder
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
@@ -33,7 +33,10 @@ import javax.inject.Inject
 /**
  * A Live video view model
  */
-class VideoViewModel @Inject constructor(app: Application, val userRepository: UserRepository) :
+class VideoViewModel @Inject constructor(
+    app: Application,
+    private val userRepository: UserRepository
+) :
     AndroidViewModel(app),
     Player.EventListener,
     LifecycleObserver,
