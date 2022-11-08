@@ -1,9 +1,9 @@
-package com.ericdream.erictv
+package com.ericdream.erictv.data.module
 
-import com.ericdream.erictv.data.repo.LiveChannelRepo
-import com.ericdream.erictv.data.repo.LiveChannelRepoImpl
-import com.ericdream.erictv.data.repo.LiveLinkGenerator
+import com.ericdream.erictv.data.repo.LiveChannelRepositoryImpl
 import com.ericdream.erictv.data.repo.LiveLinkGeneratorImpl
+import com.ericdream.erictv.data.repo.interfaces.LiveChannelRepository
+import com.ericdream.erictv.data.repo.interfaces.LiveLinkGenerator
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -20,5 +20,5 @@ abstract class DataModule {
     abstract fun bindGenerator(impl: LiveLinkGeneratorImpl): LiveLinkGenerator
 
     @Binds
-    abstract fun bindChannelRepo(impl: LiveChannelRepoImpl): LiveChannelRepo
+    abstract fun bindChannelRepo(impl: LiveChannelRepositoryImpl): LiveChannelRepository
 }

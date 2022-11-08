@@ -16,10 +16,12 @@ class ChannelBO {
     var asset: Asset = Asset()
 
     class Asset {
+        @SerializedName("hls")
         var hls: Hls = Hls()
     }
 
     class Hls {
+        @SerializedName("adaptive")
         var adaptive: List<String> = listOf()
     }
 }

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ericdream.erictv.data.model.LiveChannel
-import com.ericdream.erictv.data.repo.LiveChannelRepoImpl
+import com.ericdream.erictv.data.repo.LiveChannelRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collectLatest
@@ -15,7 +15,7 @@ import org.koin.core.KoinComponent
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val repo: LiveChannelRepoImpl) : ViewModel(),
+class MainViewModel @Inject constructor(private val repo: LiveChannelRepositoryImpl) : ViewModel(),
     KoinComponent {
 
     val text: MutableLiveData<String> = MutableLiveData<String>()

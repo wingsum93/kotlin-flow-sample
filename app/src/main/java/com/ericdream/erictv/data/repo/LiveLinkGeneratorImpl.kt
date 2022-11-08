@@ -4,10 +4,10 @@ import android.util.Log
 import com.ericdream.erictv.data.api.NowApi
 import com.ericdream.erictv.data.model.ChannelResult
 import com.ericdream.erictv.data.model.ViuTvIO
+import com.ericdream.erictv.data.repo.interfaces.LiveLinkGenerator
 import javax.inject.Inject
 
 class LiveLinkGeneratorImpl @Inject constructor(private val nowApi: NowApi) : LiveLinkGenerator {
-    val TAG = "eric1999"
 
     override suspend fun getNow331Link(): ChannelResult {
         return try {
@@ -42,5 +42,9 @@ class LiveLinkGeneratorImpl @Inject constructor(private val nowApi: NowApi) : Li
         } catch (e: Exception) {
             ChannelResult.create(e)
         }
+    }
+
+    companion object {
+        private const val TAG = "eric1999"
     }
 }

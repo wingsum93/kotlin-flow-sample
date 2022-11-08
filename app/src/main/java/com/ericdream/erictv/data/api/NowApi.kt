@@ -1,7 +1,6 @@
 package com.ericdream.erictv.data.api
 
 import com.ericdream.erictv.data.model.ChannelBO
-import com.ericdream.erictv.data.model.NowBO
 import com.ericdream.erictv.data.model.ViuTvIO
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,7 +17,7 @@ interface NowApi {
         @Query(value = "format") format: String = "HLS",
         @Query(value = "audioCode") audioCode: String = "",
         @Query(value = "callerReferenceNo") callerReferenceNo: String = "20140702122500",
-    ): NowBO
+    ): ChannelBO
 
     @POST("https://api.viu.now.com/p8/3/getLiveURL")
     suspend fun getViuTV(@Body input: ViuTvIO): ChannelBO

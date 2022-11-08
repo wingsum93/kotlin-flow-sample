@@ -1,4 +1,4 @@
-package com.ericdream.erictv.util
+package com.ericdream.erictv.utils
 
 object PlaybackStateDecoder {
 

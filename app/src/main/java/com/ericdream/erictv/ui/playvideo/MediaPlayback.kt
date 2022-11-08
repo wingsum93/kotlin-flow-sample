@@ -1,4 +1,4 @@
-package com.ericdream.erictv
+package com.ericdream.erictv.ui.playvideo
 
 interface MediaPlayback {
     fun playPause()

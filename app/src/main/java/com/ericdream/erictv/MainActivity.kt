@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
@@ -19,8 +18,9 @@ import com.ericdream.erictv.theme.JetchatTheme
 import com.ericdream.erictv.ui.home.ChannelList
 import com.ericdream.erictv.ui.home.MainApp
 import com.ericdream.erictv.ui.home.MainViewModel
-import com.ericdream.erictv.ui.home.VideoScreen
+import com.ericdream.erictv.ui.playvideo.VideoScreen
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.compose.foundation.layout.padding
 
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
