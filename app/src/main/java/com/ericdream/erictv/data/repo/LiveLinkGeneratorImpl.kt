@@ -3,7 +3,7 @@ package com.ericdream.erictv.data.repo
 import android.util.Log
 import com.ericdream.erictv.data.api.NowApi
 import com.ericdream.erictv.data.model.ChannelResult
-import com.ericdream.erictv.data.model.ViuTvIO
+import com.ericdream.erictv.data.model.ViuTvRequest
 import com.ericdream.erictv.data.repo.interfaces.LiveLinkGenerator
 import javax.inject.Inject
 
@@ -32,11 +32,12 @@ class LiveLinkGeneratorImpl @Inject constructor(private val nowApi: NowApi) : Li
     }
 
     override suspend fun getViuTVLink(): ChannelResult {
-        val io = ViuTvIO()
-        io.channelno = "099"
-        io.deviceId = "99999999"
+        val request = ViuTvRequest(
+            channelno = "099",
+            deviceId = "99999999"
+        )
         return try {
-            val bo = nowApi.getViuTV(io)
+            val bo = nowApi.getViuTV(request)
             val link = bo.asset.hls.adaptive[0]
             ChannelResult.create(link)
         } catch (e: Exception) {
