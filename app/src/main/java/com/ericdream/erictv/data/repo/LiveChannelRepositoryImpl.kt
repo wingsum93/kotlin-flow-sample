@@ -34,11 +34,6 @@ class LiveChannelRepositoryImpl @Inject constructor(private val liveLinkGenerato
             key = "rthk2"
         }
         livechannels += LiveChannel.liveChannel {
-            name = "ViuTv"
-            iconLink = Constant.Icon.VIUTV
-            key = "viutv"
-        }
-        livechannels += LiveChannel.liveChannel {
             name = "Now 331"
             iconLink = Constant.Icon.NOWTV
             key = "331"
@@ -48,12 +43,6 @@ class LiveChannelRepositoryImpl @Inject constructor(private val liveLinkGenerato
             iconLink = Constant.Icon.NOWTV
 
             key = "332"
-        }
-        livechannels += LiveChannel.liveChannel {
-            name = "CABLE TV (MOCK)"
-            iconLink = Constant.Icon.CABLETV
-            link = Constant.NETWORK_HLS_LINK
-            key = "xxxtv"
         }
     }
 
